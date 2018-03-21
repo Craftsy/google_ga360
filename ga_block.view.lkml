@@ -176,8 +176,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'listing detail page'
-        and ${hits.eventInfo}.eventlabel = 'free: no + seller: craftsy' then 1
-        else 0
+        and ${hits.eventInfo}.eventlabel = 'free: no + seller: craftsy' then ${id}
         end;;
   }
 
@@ -185,8 +184,7 @@ view: ga_sessions_base {
     label: "Goal 1: Paid Purchase"
     type: count_distinct
     sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating' then 1
-        else 0
+      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating' then ${id}
         end;;
   }
 
