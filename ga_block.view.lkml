@@ -181,6 +181,15 @@ view: ga_sessions_base {
         end;;
   }
 
+  measure: goal_paid_purchase {
+    label: "Goal 1: Paid Purchase"
+    type: count_distinct
+    sql: case
+      when ${hits_eventInfo}.eventcategory = 'transaction revenue generating' then 1
+        else 0
+        end;;
+  }
+
   measure: session_count {
     type: count
     drill_fields: [fullVisitorId, visitnumber, session_count, totals.transactions_count, totals.transactionRevenue_total]
