@@ -175,8 +175,8 @@ view: ga_sessions_base {
     label: "Goal 16: View Paid Listing"
     type: count_distinct
     sql: case
-      when ${hits_eventInfo}.eventcategory = 'listing detail page'
-        and ${hits_eventInfo}.eventlabel = 'free: no + seller: craftsy' then 1
+      when ${hits.eventInfo}.eventcategory = 'listing detail page'
+        and ${hits.eventInfo}.eventlabel = 'free: no + seller: craftsy' then 1
         else 0
         end;;
   }
