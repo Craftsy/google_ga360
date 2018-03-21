@@ -171,6 +171,12 @@ view: ga_sessions_base {
   dimension: socialEngagementType {label: "Social Engagement Type"}
   dimension: userid {label: "User ID"}
 
+  measure: view_paid_listing_conversion_rate {
+    label: "View Paid Listing Conversion Rate"
+    type: percent_of_total
+    sql: ${goal_view_paid_listing} / count(distinct ${id}) ;;
+  }
+
   measure: goal_view_paid_listing {
     label: "Goal 16: View Paid Listing"
     type: count_distinct
