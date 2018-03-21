@@ -185,7 +185,7 @@ view: ga_sessions_base {
     label: "Goal 1: Paid Purchase"
     type: count_distinct
     sql: case
-      when ${hits_eventInfo}.eventcategory = 'transaction revenue generating' then 1
+      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating' then 1
         else 0
         end;;
   }
