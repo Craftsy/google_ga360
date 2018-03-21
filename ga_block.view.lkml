@@ -167,8 +167,19 @@ view: ga_sessions_base {
   dimension: date {
     hidden: yes
   }
+
   dimension: socialEngagementType {label: "Social Engagement Type"}
   dimension: userid {label: "User ID"}
+
+  measure: goal_view_paid_listing {
+    label: "Goal 16: View Paid Listing"
+    type: count_distinct
+    sql: case
+      when ${hits_eventInfo}.eventcategory = 'listing detail page'
+        and ${hits_eventInfo}.eventlabel = 'free: no + seller: craftsy' then 1
+        else 0
+        end;;
+  }
 
   measure: session_count {
     type: count
@@ -675,14 +686,7 @@ view: hits_eCommerceAction_base {
 view: hits_eventInfo_base {
   extension: required
   dimension: eventCategory {label: "Event Category"}
-
   dimension: eventAction {label: "Event Action"}
   dimension: eventLabel {label: "Event Label"}
-  dimension: eventValue {label: "Event Category"}
-
+  dimension: eventValue {label: "Event Value"}
 }
-
-# view: hits_sourcePropertyInfo {
-# #   extension: required
-#   dimension: sourcePropertyDisplayName {label: "Property Display Name"}
-# }
