@@ -199,7 +199,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'^(new|repeat) course$') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'(new|repeat) course') then ${id}
        end;;
   }
 
@@ -208,7 +208,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'^(new|repeat) supply$') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'(new|repeat) supply') then ${id}
        end;;
   }
 
@@ -235,7 +235,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'listing cart add'
-       and ${hits.eventInfo}.eventlabel = 'free: yes + seller: cratsy' then ${id}
+       and ${hits.eventInfo}.eventlabel = 'free: yes + seller: craftsy' then ${id}
        end;;
   }
 
@@ -275,51 +275,6 @@ view: ga_sessions_base {
        end;;
   }
 
-  measure: goal_kit_activation {
-    label: "Goal 11: Kit Activation"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*new kit.*') then ${id}
-       end;;
-  }
-
-  measure: goal_kit_activity {
-    label: "Goal 12: Kit Activity"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*repeat kit.*') then ${id}
-       end;;
-  }
-
-  measure: goal_subscription {
-    label: "Goal 13: Subscription"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'membership signup step'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventaction, r'^(trial started|no trial activation)$') then ${id}
-       end;;
-  }
-
-  measure: goal_private_label_activity {
-    label: "Goal 14: Private Label Activity"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*repeat private label.*') then ${id}
-       end;;
-  }
-
-  measure: goal_private_label_activation {
-    label: "Goal 15: Private Label Activation"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*new private label.*') then ${id}
-       end;;
-  }
-
   measure: goal_view_paid_listing {
     label: "Goal 16: View Paid Listing"
     type: count_distinct
@@ -334,7 +289,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'account create'
-        and ${hits.eventInfo}.eventaction = 'success' then ${id}
+        and REGEXP_CONTAINS(${hits.eventInfo}.eventaction, r'^success.*') then ${id}
         end;;
   }
 
