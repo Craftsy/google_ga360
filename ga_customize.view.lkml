@@ -1,5 +1,7 @@
+include: "adwordsclickinfo_base.view.lkml"
 include: "device_base.view.lkml"
 include: "ga_block.view.lkml"
+include: "geonetwork_base.view.lkml"
 include: "hits_appinfo_base.view.lkml"
 include: "hits_base.view.lkml"
 include: "hits_customdimensions_base.view.lkml"
@@ -12,6 +14,8 @@ include: "hits_page_base.view.lkml"
 include: "hits_publisher_base.view.lkml"
 include: "hits_social_base.view.lkml"
 include: "hits_transaction_base.view.lkml"
+include: "session_totals_base.view.lkml"
+include: "trafficsource_base.view.lkml"
 
 explore: ga_sessions_block {
   extends: [ga_sessions_base]
@@ -197,15 +201,15 @@ view: ga_sessions {
 }
 
 view: geoNetwork {
-  extends: [geoNetwork_base]
+  extends: [geonetwork_base]
 }
 
 view: totals {
-  extends: [totals_base]
+  extends: [session_totals_base]
 }
 
 view: trafficSource {
-  extends: [trafficSource_base]
+  extends: [trafficsource_base]
 }
 
 view: device {
