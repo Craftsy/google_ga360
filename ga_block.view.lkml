@@ -199,7 +199,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and ${hits.eventInfo}.eventlabel REGEXP '^(new|repeat) course$' then ${id}
+       and REGEXP_MATCH(${hits.eventInfo}.eventlabel,'^(new|repeat) course$') then ${id}
        end;;
   }
 
