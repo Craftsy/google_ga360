@@ -1,4 +1,17 @@
+include: "device_base.view.lkml"
 include: "ga_block.view.lkml"
+include: "hits_appinfo_base.view.lkml"
+include: "hits_base.view.lkml"
+include: "hits_customdimensions_base.view.lkml"
+include: "hits_custommetrics_base.view.lkml"
+include: "hits_customvariables_base.view.lkml"
+include: "hits_ecommerceaction_base.view.lkml"
+include: "hits_eventinfo_base.view.lkml"
+include: "hits_item_base.view.lkml"
+include: "hits_page_base.view.lkml"
+include: "hits_publisher_base.view.lkml"
+include: "hits_social_base.view.lkml"
+include: "hits_transaction_base.view.lkml"
 
 explore: ga_sessions_block {
   extends: [ga_sessions_base]
@@ -248,24 +261,22 @@ view: hits_social {
   dimension: socialInteractionNetworkAction {hidden: yes}
 }
 
-
 view: hits_appInfo {
-  extends: [hits_appInfo_base]
+  extends: [hits_appinfo_base]
 }
 
 view: hits_eventInfo {
-  extends: [hits_eventInfo_base]
+  extends: [hits_eventinfo_base]
   dimension: play {
     sql: ${eventAction} = "play" ;;
     type: yesno
   }
 }
 
-
-view: hits_customDimensions {
-  extends: [hits_customDimensions_base]
+view: hits_customdimensions {
+  extends: [hits_customdimensions_base]
 }
 
 view: hits_customVariables {
-  extends: [hits_customVariables_base]
+  extends: [hits_customvariables_base]
 }
