@@ -3,6 +3,10 @@ explore: ga_sessions_base {
   extension: required
   view_name: ga_sessions
   view_label: "Session"
+
+  ##
+  ### Joins
+  ##
   join: totals {
     view_label: "Session"
     sql: LEFT JOIN UNNEST([${ga_sessions.totals}]) as totals ;;
@@ -117,6 +121,9 @@ explore: ga_sessions_base {
 
 view: ga_sessions_base {
   extension: required
+  ##
+  ### Session Level Dimensions
+  ##
   dimension: partition_date {
     type: date_time
     sql: TIMESTAMP(PARSE_DATE('%Y%m%d', REGEXP_EXTRACT(_TABLE_SUFFIX,r'^\d\d\d\d\d\d\d\d')))  ;;
@@ -146,8 +153,14 @@ view: ga_sessions_base {
     style: integer
     sql: ${visitnumber} ;;
   }
-  dimension: visitId {label: "Visit ID"}
-  dimension: fullVisitorId {label: "Full Visitor ID"}
+
+  dimension: visitId {
+    label: "Visit ID"
+  }
+
+  dimension: fullVisitorId {
+    label: "Full Visitor ID"
+  }
 
   dimension: visitStartSeconds {
     label: "Visit Start Seconds"
@@ -163,150 +176,59 @@ view: ga_sessions_base {
     type: time
     sql: (TIMESTAMP(${partition_date})) ;;
   }
+
   ## use visit or hit start time instead
   dimension: date {
     hidden: yes
   }
 
-  dimension: socialEngagementType {label: "Social Engagement Type"}
-  dimension: userid {label: "User ID"}
+  dimension: socialEngagementType {
+    label: "Social Engagement Type"
+  }
 
+  dimension: userid {
+    label: "User ID"
+  }
+
+  dimension: channelGrouping {
+    label: "Channel Grouping"
+  }
+
+  # subrecords
+  dimension: geoNetwork {
+    hidden: yes
+  }
+
+  dimension: totals {
+    hidden:yes
+  }
+
+  dimension: trafficSource {
+    hidden:yes
+  }
+
+  dimension: device {
+    hidden:yes
+  }
+
+  dimension: customDimensions {
+    hidden:yes
+  }
+
+  dimension: hits {
+    hidden:yes
+  }
+
+  dimension: hits_eventInfo {
+    hidden:yes
+  }
+
+##
+### Session Level Measures
+##
   measure: distinct_sessions {
     type: count_distinct
     sql: ${id} ;;
-  }
-
-## Conversion Rates for Goals
-  measure: goal_view_paid_listing_conversion_rate {
-    label: "View Paid Listing Conversion Rate"
-    type: number
-    value_format_name: percent_1
-    sql: ${goal_view_paid_listing} / ${distinct_sessions};;
-  }
-
-## Goals
-
-  measure: goal_paid_purchase {
-    label: "Goal 1: Paid Purchase"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating' then ${id}
-       end;;
-  }
-
-  measure: goal_course_purchase {
-    label: "Goal 2: Course Purchase"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'(new|repeat) course') then ${id}
-       end;;
-  }
-
-  measure: goal_supplies_purchase {
-    label: "Goal 3: Supplies Purchase"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'(new|repeat) supply') then ${id}
-       end;;
-  }
-
-  measure: goal_new_buyer {
-    label: "Goal 4: New Buyer"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and ${hits.eventInfo}.eventaction = 'buyer type: new' then ${id}
-       end;;
-  }
-
-  measure: goal_repeat_purchase {
-    label: "Goal 5: Repeat Purchase"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and ${hits.eventInfo}.eventaction = 'buyer type: repeat' then ${id}
-       end;;
-  }
-
-  measure: goal_paid_add_to_cart {
-    label: "Goal 6: Paid Add-to-Cart"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'listing cart add'
-       and ${hits.eventInfo}.eventlabel = 'free: yes + seller: craftsy' then ${id}
-       end;;
-  }
-
-  measure: goal_course_activation {
-    label: "Goal 7: Course Activation"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*new course.*') then ${id}
-       end;;
-  }
-
-  measure: goal_course_activity {
-    label: "Goal 8: Course Activity"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*repeat course.*') then ${id}
-       end;;
-  }
-
-  measure: goal_supply_activation {
-    label: "Goal 9: Supply Activation"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*new supply.*') then ${id}
-       end;;
-  }
-
-  measure: goal_supply_activity {
-    label: "Goal 10: Supply Activity"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*repeat supply.*') then ${id}
-       end;;
-  }
-
-  measure: goal_view_paid_listing {
-    label: "Goal 16: View Paid Listing"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'listing detail page'
-        and ${hits.eventInfo}.eventlabel = 'free: no + seller: craftsy' then ${id}
-        end;;
-  }
-
-  measure: goal_register {
-    label: "Goal 17: Register"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'account create'
-        and REGEXP_CONTAINS(${hits.eventInfo}.eventaction, r'^success.*') then ${id}
-        end;;
-  }
-
-  measure: goal_blog_subscribe {
-    label: "Goal 18: Blog Subscribe"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'blog subscription' then ${id}
-        end;;
-  }
-
-  measure: goal_free_transaction {
-    label: "Goal 19: Free Transaction"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'transaction non-revenue generating' then ${id}
-        end;;
   }
 
   measure: session_count {
@@ -349,57 +271,61 @@ view: ga_sessions_base {
     }
   }
 
-  dimension: channelGrouping {label: "Channel Grouping"}
-
-  # subrecords
-  dimension: geoNetwork {hidden: yes}
-  dimension: totals {hidden:yes}
-  dimension: trafficSource {hidden:yes}
-  dimension: device {hidden:yes}
-  dimension: customDimensions {hidden:yes}
-  dimension: hits {hidden:yes}
-  dimension: hits_eventInfo {hidden:yes}
-
 }
 
+##
+### Views
+##
 view: geoNetwork_base {
   extension: required
+
   dimension: continent {
     drill_fields: [subcontinent,country,region,city,metro,approximate_networkLocation,networkLocation]
   }
+
   dimension: subcontinent {
     drill_fields: [country,region,city,metro,approximate_networkLocation,networkLocation]
-
   }
+
   dimension: country {
     map_layer_name: countries
     drill_fields: [region,metro,city,approximate_networkLocation,networkLocation]
   }
+
   dimension: region {
     drill_fields: [metro,city,approximate_networkLocation,networkLocation]
   }
+
   dimension: metro {
     drill_fields: [city,approximate_networkLocation,networkLocation]
   }
+
   dimension: city {drill_fields: [metro,approximate_networkLocation,networkLocation]}
+
   dimension: cityid { label: "City ID"}
+
   dimension: networkDomain {label: "Network Domain"}
+
   dimension: latitude {
     type: number
     hidden: yes
     sql: CAST(${TABLE}.latitude as FLOAT64);;
   }
+
   dimension: longitude {
     type: number
     hidden: yes
     sql: CAST(${TABLE}.longitude as FLOAT64);;
   }
+
   dimension: networkLocation {label: "Network Location"}
+
   dimension: location {
     type: location
     sql_latitude: ${latitude} ;;
     sql_longitude: ${longitude} ;;
   }
+
   dimension: approximate_networkLocation {
     type: location
     sql_latitude: ROUND(${latitude},1) ;;
@@ -408,14 +334,15 @@ view: geoNetwork_base {
   }
 }
 
-
 view: totals_base {
   extension: required
+
   dimension: id {
     primary_key: yes
     hidden: yes
     sql: ${ga_sessions.id} ;;
   }
+
   measure: visits_total {
     type: sum
     sql: ${TABLE}.visits ;;
