@@ -171,12 +171,20 @@ view: ga_sessions_base {
   dimension: socialEngagementType {label: "Social Engagement Type"}
   dimension: userid {label: "User ID"}
 
-  measure: view_paid_listing_conversion_rate {
-    label: "View Paid Listing Conversion Rate"
-    type: percent_of_total
-    sql: ${goal_view_paid_listing} / count(distinct ${id}) ;;
+  measure: distinct_sessions {
+    type: count_distinct
+    sql: ${id} ;;
   }
 
+## Conversion Rates for Goals
+  measure: goal_view_paid_listing_conversion_rate {
+    label: "View Paid Listing Conversion Rate"
+    type: number
+    value_format_name: percent_1
+    sql: ${goal_view_paid_listing} / ${distinct_sessions};;
+  }
+
+## Goals
   measure: goal_view_paid_listing {
     label: "Goal 16: View Paid Listing"
     type: count_distinct
@@ -246,7 +254,6 @@ view: ga_sessions_base {
   dimension: hits_eventInfo {hidden:yes}
 
 }
-
 
 view: geoNetwork_base {
   extension: required
