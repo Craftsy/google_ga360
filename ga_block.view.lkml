@@ -208,7 +208,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'^(new|repeat) supply$') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'^(new|repeat) supply$') then ${id}
        end;;
   }
 
@@ -244,7 +244,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*new course.*') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*new course.*') then ${id}
        end;;
   }
 
@@ -271,7 +271,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*repeat supply.*') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*repeat supply.*') then ${id}
        end;;
   }
 
@@ -280,7 +280,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*new kit.*') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*new kit.*') then ${id}
        end;;
   }
 
@@ -289,7 +289,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,'.*repeat kit.*') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*repeat kit.*') then ${id}
        end;;
   }
 
@@ -298,7 +298,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'membership signup step'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventaction,r'^(trial started|no trial activation)$') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventaction, r'^(trial started|no trial activation)$') then ${id}
        end;;
   }
 
@@ -307,7 +307,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*repeat private label.*') then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*repeat private label.*') then ${id}
        end;;
   }
 
@@ -316,7 +316,7 @@ view: ga_sessions_base {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'transaction revenue generating'
-       and ${hits.eventInfo}.eventlabel REGEXP '.*new private label.*' then ${id}
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel, r'.*new private label.*') then ${id}
        end;;
   }
 
