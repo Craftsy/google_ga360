@@ -7,5 +7,5 @@ include: "*.view"
 include: "*.dashboard"
 
 explore: ga_sessions {
-  extends: [ga_sessions_block]
+  extends: [ga_sessions_explore_block]
 }

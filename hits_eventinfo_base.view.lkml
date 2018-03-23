@@ -16,4 +16,9 @@ view: hits_eventinfo_base {
     dimension: eventValue {
       label: "Event Value"
     }
+
+  dimension: play {
+    sql: ${eventAction} = "play" ;;
+    type: yesno
+  }
 }

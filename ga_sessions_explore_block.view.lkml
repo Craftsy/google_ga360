@@ -1,4 +1,4 @@
-explore: ga_sessions_block {
+explore: ga_sessions_explore_block {
   persist_for: "1 hour"
   extension: required
   view_name: ga_sessions
