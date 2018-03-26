@@ -2,6 +2,7 @@ explore: ga_sessions_explore {
   persist_for: "1 hour"
   extension: required
   view_name: ga_sessions
+  from: ga_sessions
   view_label: "Session"
 
   always_filter: {
