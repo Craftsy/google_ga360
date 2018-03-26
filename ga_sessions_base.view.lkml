@@ -28,7 +28,7 @@ view: ga_sessions {
     }
 
     dimension: tha_real_user_id {
-      label: "User Id"
+      label: "User ID"
       type: number
       sql: (
               select d.value
