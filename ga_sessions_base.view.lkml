@@ -1,5 +1,7 @@
-view: ga_sessions_base {
-    extension: required
+include: "*.view.lkml"
+
+view: ga_sessions {
+   sql_table_name: `129435859.ga_sessions_*` ;;
     ##
     ### Session Level Dimensions
     ##
@@ -282,4 +284,85 @@ view: ga_sessions_base {
         value: "<> 1"
       }
   }
+}
+
+view: hits_appInfo {
+  extends: [hits_appinfo_base]
+}
+
+view: hits_eventInfo {
+  extends: [hits_eventinfo_base]
+}
+
+view: hits_customdimensions {
+  extends: [hits_customdimensions_base]
+}
+
+view: hits_customVariables {
+  extends: [hits_customvariables_base]
+}
+
+view: hits {
+  extends: [hits_base]
+}
+
+view: hits_page {
+  extends: [hits_page_base]
+}
+
+# -- Ecommerce Fields
+
+view: hits_transaction {
+  #extends: [hits_transaction_base]  # Comment out to remove fields
+}
+
+view: hits_item {
+  #extends: [hits_item_base]
+}
+
+# -- Advertising Fields
+
+view: adwordsClickInfo {
+  #extends: [adwordsClickInfo_base]
+}
+
+view: hits_publisher {
+  #extends: [hits_publisher_base]   # Comment out this line to remove fields
+}
+
+view: geoNetwork {
+  extends: [geonetwork_base]
+}
+
+view: totals {
+  extends: [session_totals_base]
+}
+
+view: trafficSource {
+  extends: [trafficsource_base]
+}
+
+view: device {
+  extends: [device_base]
+}
+
+#  We only want some of the interaction fields.
+view: hits_social {
+  extends: [hits_social_base]
+
+  dimension: socialInteractionNetwork {hidden: yes}
+
+  dimension: socialInteractionAction {hidden: yes}
+
+  dimension: socialInteractions {hidden: yes}
+
+  dimension: socialInteractionTarget {hidden: yes}
+
+  #dimension: socialNetwork {hidden: yes}
+
+  dimension: uniqueSocialInteractions {hidden: yes}
+
+  #dimension: hasSocialSourceReferral {hidden: yes}
+
+  dimension: socialInteractionNetworkAction {hidden: yes}
 }

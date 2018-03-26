@@ -6,6 +6,8 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
+
 explore: ga_sessions {
-  extends: [ga_sessions_explore_block]
+  label: "Google Anayltics Sessions"
+  extends: [ga_sessions_explore]
 }
