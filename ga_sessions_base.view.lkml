@@ -22,9 +22,20 @@ view: ga_sessions {
       description: "The session number for this user. If this is the first session, then this is set to 1."
     }
 
-    dimension:  first_time_visitor {
+    dimension: first_time_visitor {
       type: yesno
       sql: ${visitnumber} = 1 ;;
+    }
+
+    dimension: tha_real_user_id {
+      label: "User Id"
+      type: number
+      sql: (
+              select d.value
+              from UNNEST(${TABLE}.customDimensions) as d
+              where d.index = 2
+                and d.value is not null
+            );;
     }
 
     dimension: visitnumbertier {
@@ -68,7 +79,8 @@ view: ga_sessions {
     }
 
     dimension: userid {
-      label: "User ID"
+      label: "User id"
+     # hidden: yes ## this is not the actual user_id, it is derived from custom fields
     }
 
     dimension: channelGrouping {
@@ -89,10 +101,6 @@ view: ga_sessions {
     }
 
     dimension: device {
-      hidden:yes
-    }
-
-    dimension: customDimensions {
       hidden:yes
     }
 

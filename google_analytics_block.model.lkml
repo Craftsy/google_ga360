@@ -14,8 +14,8 @@ explore: ga_sessions {
   label: "Google Anayltics Sessions"
   extends: [ga_sessions_explore]
 
-  join: dim_customer {
-    relationship: one_to_one
-    sql_on: ${dim_customer.user_id} = ${ga_sessions.userid} ;;
-  }
+#  join: dim_customer {
+#    relationship: one_to_one
+#    sql_on: ${dim_customer.user_id} = ${ga_sessions.userid} ;;
+#  }
 }
