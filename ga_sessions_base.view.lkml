@@ -79,8 +79,7 @@ view: ga_sessions {
     }
 
     dimension: userid {
-      label: "User id"
-     # hidden: yes ## this is not the actual user_id, it is derived from custom fields
+      hidden: yes ## this is not the actual user_id, it is derived from custom fields
     }
 
     dimension: channelGrouping {
