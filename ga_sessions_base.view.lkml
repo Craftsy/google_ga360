@@ -315,6 +315,12 @@ view: hits {
 
 view: hits_page {
   extends: [hits_page_base]
+
+  dimension: full_page_path {
+    label: "Full Page Path"
+    type: string
+    sql: concat(${hostName}, ${pagePath}) ;;
+  }
 }
 
 # -- Ecommerce Fields
