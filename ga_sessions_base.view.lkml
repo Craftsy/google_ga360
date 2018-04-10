@@ -29,7 +29,7 @@ view: ga_sessions {
 
     dimension: tha_real_user_id {
       label: "User ID"
-      type: number
+      type: string
       sql: (
               select d.value
               from UNNEST(${TABLE}.customDimensions) as d

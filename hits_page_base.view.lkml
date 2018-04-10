@@ -14,6 +14,17 @@ view: hits_page_base {
     }
   }
 
+  dimension: page_type {
+    label: "Page Type"
+    type: string
+    sql: (
+              select d.value
+              from UNNEST(${TABLE}.customDimensions) as d
+              where d.index = 32
+                and d.value is not null
+      ) ;;
+  }
+
   dimension: hostName {
     label: "Host Name"
   }
