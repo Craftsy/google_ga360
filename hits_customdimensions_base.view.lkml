@@ -51,6 +51,36 @@ view: hits_customdimensions_base {
     );;
   }
 
+  dimension: gallery_name {
+    label: "Gallery Name"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 67
+    );;
+  }
+
+  dimension: gallery_id {
+    label: "Gallery ID"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 66
+    );;
+  }
+
+  dimension: gallery_type {
+    label: "Gallery Type"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 68
+    );;
+  }
+
   dimension: gallery_content_type {
     label: "Gallery Content Type"
     type: string
