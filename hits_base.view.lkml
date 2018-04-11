@@ -30,7 +30,10 @@ view: hits_base {
       type: yesno
     }
 
-    dimension: referer {}
+    dimension: referer {
+      label: "Referer"
+      type: string
+    }
 
     measure: count {
       type: count
