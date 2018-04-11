@@ -121,5 +121,84 @@ view: hits_customdimensions_base {
     );;
   }
 
+  dimension: unlimited_active {
+    label: "Unlimited Active"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 140
+    );;
+  }
+
+  dimension: in_app_purchase {
+    label: "In-App Purchase"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 119
+    );;
+  }
+
+  dimension: project_associated_listing {
+    label: "Project Associated Listing"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 97
+    );;
+  }
+
+  dimension: project_associated_listing_product_line {
+    label: "Project Associated Listing Product Line"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 98
+    );;
+  }
+
+  dimension: project_id {
+    label: "Project ID"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 99
+    );;
+  }
+
+  dimension: project_name {
+    label: "Project Name"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 100
+    );;
+  }
+
+  dimension: project_category {
+    label: "Project Cateory"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 101
+    );;
+  }
+
+  dimension: cart_id {
+    label: "Cart ID"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 64
+    );;
+  }
 
 }
