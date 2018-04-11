@@ -11,6 +11,16 @@ view: hits_customdimensions_base {
     );;
   }
 
+  dimension: coupon_transaction {
+    label: "Coupon (Transaction)"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 65
+    );;
+  }
+
   dimension: coupon_entry_method {
     label: "Coupon Entry Method"
     type: string
@@ -28,6 +38,16 @@ view: hits_customdimensions_base {
         select s.value
         from ${hits.customDimensions} as s
         where s.index = 114
+    );;
+  }
+
+  dimension: logged_in {
+    label: "Logged In"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 21
     );;
   }
 
@@ -229,6 +249,116 @@ view: hits_customdimensions_base {
         from ${hits.customDimensions} as s
         where s.index = 64
     );;
+  }
+
+  dimension: blog_author {
+   label: "Blog Author"
+   type: string
+      sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 75
+      );;
+  }
+
+  dimension: blog_category {
+     label: "Blog Category"
+     type: string
+        sql: (
+                select s.value
+                from ${hits.customDimensions} as s
+                where s.index = 76
+        );;
+  }
+
+  dimension: blog_post_id {
+     label: "Blog Post Id"
+     type: string
+        sql: (
+                select s.value
+                from ${hits.customDimensions} as s
+                where s.index = 77
+        );;
+  }
+
+  dimension: blog_page_type {
+     label: "Blog Page Type"
+     type: string
+        sql: (
+                select s.value
+                from ${hits.customDimensions} as s
+                where s.index = 78
+        );;
+  }
+
+  dimension: blog_publish_date {
+     label: "Blog Publish Date"
+     type: string
+        sql: (
+                select s.value
+                from ${hits.customDimensions} as s
+                where s.index = 79
+        );;
+  }
+
+  dimension: blog_seo_title {
+     label: "Blog SEO Title"
+     type: string
+        sql: (
+                select s.value
+                from ${hits.customDimensions} as s
+                where s.index = 80
+        );;
+  }
+
+dimension: video_playlist_id {
+   label: "Video Playlist Id"
+   type: string
+      sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 81
+      );;
+}
+
+dimension: video_playlist_name {
+   label: "Video Playlist Name"
+   type: string
+      sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 82
+      );;
+}
+
+dimension: video_episode_id {
+   label: "Video Episode Id"
+   type: string
+      sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 83
+      );;
+}
+
+dimension: video_episode_name {
+   label: "Video Episode Name"
+   type: string
+        sql: (
+                select s.value
+                from ${hits.customDimensions} as s
+                where s.index = 84
+        );;
+}
+
+dimension: video_entrance_component {
+   label: "Video Entrance Component"
+   type: string
+      sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 85
+      );;
   }
 
 }
