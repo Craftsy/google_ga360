@@ -31,8 +31,8 @@ view: hits_customdimensions_base {
     );;
   }
 
-  dimension: gallery_sort_order {
-    label: "Gallery Sort Order"
+  dimension: feature_gallery_sort_order {
+    label: "Feature Gallery Sort Order"
     type: string
     sql: (
         select s.value
@@ -41,8 +41,8 @@ view: hits_customdimensions_base {
     );;
   }
 
-  dimension: gallery_page_number {
-    label: "Gallery Page Number"
+  dimension: feature_gallery_page_number {
+    label: "Feature Gallery Page Number"
     type: string
     sql: (
         select s.value
@@ -51,8 +51,8 @@ view: hits_customdimensions_base {
     );;
   }
 
-  dimension: gallery_name {
-    label: "Gallery Name"
+  dimension: feature_gallery_name {
+    label: "Feature Gallery Name"
     type: string
     sql: (
         select s.value
@@ -61,8 +61,8 @@ view: hits_customdimensions_base {
     );;
   }
 
-  dimension: gallery_id {
-    label: "Gallery ID"
+  dimension: feature_gallery_id {
+    label: "Feature Gallery ID"
     type: string
     sql: (
         select s.value
@@ -71,8 +71,8 @@ view: hits_customdimensions_base {
     );;
   }
 
-  dimension: gallery_type {
-    label: "Gallery Type"
+  dimension: feature_gallery_type {
+    label: "Feature Gallery Type"
     type: string
     sql: (
         select s.value
@@ -81,8 +81,8 @@ view: hits_customdimensions_base {
     );;
   }
 
-  dimension: gallery_content_type {
-    label: "Gallery Content Type"
+  dimension: feature_gallery_content_type {
+    label: "Feature Gallery Content Type"
     type: string
     sql: (
         select s.value
@@ -102,7 +102,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_widget_title {
-    label: "Gallery Widget Title"
+    label: "Feature Gallery Widget Title"
     type: string
     sql: (
         select s.value
