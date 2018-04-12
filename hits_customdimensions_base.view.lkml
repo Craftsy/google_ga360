@@ -2,6 +2,7 @@ view: hits_customdimensions_base {
     extension: required
 
   dimension: coupon_code {
+    view_label: "Coupon"
     label: "Coupon Code"
     type: string
     sql: (
@@ -12,6 +13,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: coupon_transaction {
+    view_label: "Coupon"
     label: "Coupon (Transaction)"
     type: string
     sql: (
@@ -22,6 +24,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: coupon_entry_method {
+    view_label: "Coupon"
     label: "Coupon Entry Method"
     type: string
     sql: (
@@ -32,6 +35,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: coupon_failure_message {
+    view_label: "Coupon"
     label: "Coupon Failure Message"
     type: string
     sql: (
@@ -52,6 +56,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_sort_order {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Sort Order"
     type: string
     sql: (
@@ -62,6 +67,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_page_number {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Page Number"
     type: string
     sql: (
@@ -72,6 +78,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_name {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Name"
     type: string
     sql: (
@@ -82,6 +89,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_id {
+    view_label: "Feature Gallery"
     label: "Feature Gallery ID"
     type: string
     sql: (
@@ -92,6 +100,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_type {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Type"
     type: string
     sql: (
@@ -102,6 +111,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_content_type {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Content Type"
     type: string
     sql: (
@@ -112,6 +122,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_widget_type {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Widget Type"
     type: string
     sql: (
@@ -122,6 +133,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_widget_title {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Widget Title"
     type: string
     sql: (
@@ -132,6 +144,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_widget_position {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Widget Position"
     type: string
     sql: (
@@ -142,6 +155,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: feature_gallery_total_widgets {
+    view_label: "Feature Gallery"
     label: "Feature Gallery Total Widgets"
     type: string
     sql: (
@@ -252,6 +266,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: blog_author {
+   view_label: "Blog"
    label: "Blog Author"
    type: string
       sql: (
@@ -262,6 +277,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: blog_category {
+   view_label: "Blog"
      label: "Blog Category"
      type: string
         sql: (
@@ -272,6 +288,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: blog_post_id {
+   view_label: "Blog"
      label: "Blog Post Id"
      type: string
         sql: (
@@ -282,6 +299,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: blog_page_type {
+   view_label: "Blog"
      label: "Blog Page Type"
      type: string
         sql: (
@@ -292,6 +310,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: blog_publish_date {
+   view_label: "Blog"
      label: "Blog Publish Date"
      type: string
         sql: (
@@ -302,6 +321,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: blog_seo_title {
+   view_label: "Blog"
      label: "Blog SEO Title"
      type: string
         sql: (

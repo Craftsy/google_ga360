@@ -1,10 +1,6 @@
 view: trafficsource_base {
     extension: required
 
-    dimension: addContent {
-      label: "Add Content"
-    }
-
 #   dimension: adwords {}
 
     dimension: referralPath {

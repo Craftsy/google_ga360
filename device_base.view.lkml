@@ -42,6 +42,7 @@ view: device_base {
 
     dimension: mobileDeviceBranding {
       label: "Mobile Device Branding"
+      hidden: yes
     }
 
     dimension: mobileDeviceInfo {
@@ -50,13 +51,11 @@ view: device_base {
 
     dimension: mobileDeviceMarketingName {
       label: "Mobile Device Marketing Name"
+      hidden: yes
     }
 
     dimension: mobileDeviceModel {
       label: "Mobile Device Model"
-    }
-
-    dimension: mobileDeviceInputSelector {
-      label: "Mobile Device Input Selector"
+      hidden: yes
     }
 }

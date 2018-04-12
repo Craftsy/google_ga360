@@ -28,7 +28,7 @@ explore: ga_sessions_explore {
   }
 
   join: device {
-    view_label: "Session: Device"
+    view_label: "Device"
     sql: LEFT JOIN UNNEST([${ga_sessions.device}]) as device ;;
     relationship: one_to_one
   }
@@ -68,7 +68,7 @@ explore: ga_sessions_explore {
     relationship: one_to_one
   }
   join: hits_appInfo {
-    view_label: "Session: Hits: App Info"
+    view_label: "App Info"
     sql: LEFT JOIN UNNEST([${hits.appInfo}]) as hits_appInfo ;;
     relationship: one_to_one
   }
@@ -80,7 +80,7 @@ explore: ga_sessions_explore {
   }
 
   join: hits_customdimensions {
-    view_label: "Session: Hits: Custom Dimensions"
+    view_label: "Site Activity"
     sql: LEFT JOIN UNNEST(${hits.customDimensions}) as hits_customDimensions ;;
     relationship: one_to_many
   }

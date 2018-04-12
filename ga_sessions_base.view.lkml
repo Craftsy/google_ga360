@@ -129,6 +129,7 @@ view: ga_sessions {
 
 ## Goals
   measure: goal_paid_purchase {
+    view_label: "Goals"
     label: "Goal 1: Paid Purchase"
     type: count_distinct
     sql: case
@@ -137,6 +138,7 @@ view: ga_sessions {
   }
 
   measure: goal_course_purchase {
+    view_label: "Goals"
     label: "Goal 2: Course Purchase"
     type: count_distinct
     sql: case
@@ -146,6 +148,7 @@ view: ga_sessions {
   }
 
   measure: goal_supplies_purchase {
+    view_label: "Goals"
     label: "Goal 3: Supplies Purchase"
     type: count_distinct
     sql: case
@@ -155,6 +158,7 @@ view: ga_sessions {
   }
 
   measure: goal_new_buyer {
+    view_label: "Goals"
     label: "Goal 4: New Buyer"
     type: count_distinct
     sql: case
@@ -164,6 +168,7 @@ view: ga_sessions {
   }
 
   measure: goal_repeat_purchase {
+    view_label: "Goals"
     label: "Goal 5: Repeat Purchase"
     type: count_distinct
     sql: case
@@ -173,6 +178,7 @@ view: ga_sessions {
   }
 
   measure: goal_paid_add_to_cart {
+    view_label: "Goals"
     label: "Goal 6: Paid Add-to-Cart"
     type: count_distinct
     sql: case
@@ -182,6 +188,7 @@ view: ga_sessions {
   }
 
   measure: goal_course_activation {
+    view_label: "Goals"
     label: "Goal 7: Course Activation"
     type: count_distinct
     sql: case
@@ -191,6 +198,7 @@ view: ga_sessions {
   }
 
   measure: goal_course_activity {
+    view_label: "Goals"
     label: "Goal 8: Course Activity"
     type: count_distinct
     sql: case
@@ -200,6 +208,7 @@ view: ga_sessions {
   }
 
   measure: goal_supply_activation {
+    view_label: "Goals"
     label: "Goal 9: Supply Activation"
     type: count_distinct
     sql: case
@@ -209,6 +218,7 @@ view: ga_sessions {
   }
 
   measure: goal_supply_activity {
+    view_label: "Goals"
     label: "Goal 10: Supply Activity"
     type: count_distinct
     sql: case
@@ -218,6 +228,7 @@ view: ga_sessions {
   }
 
   measure: goal_view_paid_listing {
+    view_label: "Goals"
     label: "Goal 16: View Paid Listing"
     type: count_distinct
     sql: case
@@ -227,6 +238,7 @@ view: ga_sessions {
   }
 
   measure: goal_register {
+    view_label: "Goals"
     label: "Goal 17: Register"
     type: count_distinct
     sql: case
@@ -236,6 +248,7 @@ view: ga_sessions {
   }
 
   measure: goal_blog_subscribe {
+    view_label: "Goals"
     label: "Goal 18: Blog Subscribe"
     type: count_distinct
     sql: case
@@ -244,6 +257,7 @@ view: ga_sessions {
   }
 
   measure: goal_free_transaction {
+    view_label: "Goals"
     label: "Goal 19: Free Transaction"
     type: count_distinct
     sql: case
