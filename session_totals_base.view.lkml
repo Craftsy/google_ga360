@@ -58,7 +58,7 @@ view: session_totals_base {
     }
 
     measure: page_views_session {
-      label: "PageViews Per Session"
+      label: "Page Views Per Session"
       type: number
       sql: 1.0 * ${pageviews_total} / NULLIF(${ga_sessions.session_count},0) ;;
       value_format_name: decimal_2

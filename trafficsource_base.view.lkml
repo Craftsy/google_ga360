@@ -1,7 +1,10 @@
 view: trafficsource_base {
     extension: required
 
-    dimension: addContent {}
+    dimension: addContent {
+      label: "Add Content"
+    }
+
 #   dimension: adwords {}
 
     dimension: referralPath {
@@ -13,7 +16,9 @@ view: trafficsource_base {
     dimension: medium {}
     dimension: keyword {}
 
-    dimension: adContent {label: "Ad Content"}
+    dimension: adContent {
+      label: "Ad Content"
+    }
 
     measure: source_list {
       type: list

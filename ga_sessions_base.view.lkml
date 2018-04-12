@@ -11,10 +11,14 @@ view: ga_sessions {
     }
 
     dimension: id {
+      label: "Session ID"
       primary_key: yes
       sql: CONCAT(CAST(${fullVisitorId} AS STRING), '|', COALESCE(CAST(${visitId} AS STRING),'')) ;;
     }
-    dimension: visitorId {label: "Visitor ID"}
+
+    dimension: visitorId {
+      label: "Visitor ID"
+    }
 
     dimension: visitnumber {
       label: "Visit Number"

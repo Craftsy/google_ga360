@@ -55,6 +55,7 @@ view: geonetwork_base {
     }
 
     dimension: approximate_networkLocation {
+      label: "Approximate Network Location"
       type: location
       sql_latitude: ROUND(${latitude},1) ;;
       sql_longitude: ROUND(${longitude},1) ;;

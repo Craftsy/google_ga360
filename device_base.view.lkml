@@ -1,7 +1,8 @@
 view: device_base {
     extension: required
 
-    dimension: browser {}
+    dimension: browser {
+    }
 
     dimension: browserVersion {
       label:"Browser Version"
@@ -16,7 +17,8 @@ view: device_base {
     }
 
     dimension: isMobile {
-      label: "Is Mobile"
+      label: "Mobile"
+      type: yesno
     }
 
     dimension: flashVersion {

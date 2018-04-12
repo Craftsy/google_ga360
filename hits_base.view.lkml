@@ -2,11 +2,14 @@ view: hits_base {
     extension: required
 
     dimension: id {
+      label: "Hit ID"
       primary_key: yes
       sql: CONCAT(${ga_sessions.id},'|',FORMAT('%05d',${hitNumber})) ;;
     }
 
-    dimension: hitNumber {}
+    dimension: hitNumber {
+      label: "Hit Number"
+    }
 
     dimension: time {}
 
@@ -21,12 +24,12 @@ view: hits_base {
     dimension: minute {}
 
     dimension: isSecure {
-      label: "Is Secure"
+      label: "Secure"
       type: yesno
     }
 
     dimension: isiInteraction {
-      label: "Is Interaction"
+      label: "Interaction"
       type: yesno
     }
 
