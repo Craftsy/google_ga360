@@ -88,14 +88,14 @@ view: hits_customdimensions_base {
     );;
   }
 
-  dimension: feature_gallery_id {
+  dimension: feature_gallery_revision_id {
     view_label: "Feature Gallery"
     label: "Feature Gallery ID"
     type: string
     sql: (
         select s.value
         from ${hits.customDimensions} as s
-        where s.index = 66
+        where s.index = 71
     );;
   }
 
