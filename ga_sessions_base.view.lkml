@@ -39,6 +39,8 @@ view: ga_sessions {
               from UNNEST(${TABLE}.customDimensions) as d
               where d.index = 2
                 and d.value is not null
+                and d.value not like '%-%'
+                and d.value not like '%&%'
             );;
     }
 
@@ -87,7 +89,7 @@ view: ga_sessions {
     }
 
     dimension: channelGrouping {
-      label: "Channel Grouping"
+      label: "Marketing Channel Summary"
     }
 
     # subrecords
@@ -125,6 +127,13 @@ view: ga_sessions {
     type: number
     value_format_name: percent_1
     sql: ${goal_view_paid_listing} / ${distinct_sessions};;
+  }
+
+  measure: session_trends {
+    view_label: "Sessions"
+    type: count_distinct
+    sql: case when ${hits_page.hostName} in ('unlimited.craftsy.com', 'landing.craftsy.com') then ${id}
+        end ;;
   }
 
 ## Goals

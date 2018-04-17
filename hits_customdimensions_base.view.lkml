@@ -381,4 +381,24 @@ dimension: video_entrance_component {
       );;
   }
 
+  dimension: offer_code {
+    label: "Offer Code"
+    type: string
+    sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 147
+      );;
+  }
+
+  dimension: onsite_link {
+    label: "Onsite Link UQ"
+    type: string
+    sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 141
+      );;
+  }
+
 }
