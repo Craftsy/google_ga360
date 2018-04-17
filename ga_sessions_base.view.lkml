@@ -92,6 +92,7 @@ view: ga_sessions {
       label: "Marketing Channel Summary"
     }
 
+
     # subrecords
     dimension: geoNetwork {
       hidden: yes
@@ -118,6 +119,23 @@ view: ga_sessions {
     }
 
 ##
+
+  dimension: channelType {
+    label: "Channel Type"
+    type: string
+    sql:  case
+      when ${channelGrouping} IN ( 'display' , 'social performance' , 'paid search' ) then 'paid'
+      when ${channelGrouping} IN ( 'affiliates' , 'big partners' , 'instructor' , 'external email' ) then 'biz dev'
+        else 'unpaid'
+        end ;;
+  }
+
+  dimension: traffic_source{
+    label: "Traffic Source"
+    type: string
+    sql:  lower(concat(${trafficSource.source}, " / ", ${channelGrouping}));;
+  }
+
 ### Session Level Measures
 ##
 

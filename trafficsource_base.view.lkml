@@ -16,6 +16,7 @@ view: trafficsource_base {
       label: "Ad Content"
     }
 
+
     measure: source_list {
       type: list
       list_field: source
