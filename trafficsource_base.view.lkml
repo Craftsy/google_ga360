@@ -16,6 +16,11 @@ view: trafficsource_base {
       label: "Ad Content"
     }
 
+  dimension: ma_goal {
+    label: "MA Goal"
+    type: string
+    sql: REGEXP_EXTRACT(${adContent}, '(.+)/.+/.+') ;;
+  }
 
     measure: source_list {
       type: list
