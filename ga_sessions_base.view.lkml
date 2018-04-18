@@ -319,7 +319,7 @@ view: ga_sessions {
     sql: case
       when ${hits.eventInfo}.eventcategory = 'account create'
        and REGEXP_CONTAINS(${hits.eventInfo}.eventaction, r'^success.*')
-      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing).*') then ${id}
+      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
        end;;
   }
 
@@ -347,7 +347,7 @@ view: ga_sessions {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'site search results'
-      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing).*') then ${id}
+      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
        end;;
   }
 
