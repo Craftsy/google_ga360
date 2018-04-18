@@ -391,7 +391,7 @@ dimension: video_entrance_component {
       );;
   }
 
-  dimension: onsite_link {
+  dimension: onsite_link_uq {
     label: "Onsite Link UQ"
     type: string
     sql: (
