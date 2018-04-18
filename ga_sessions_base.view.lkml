@@ -301,6 +301,118 @@ view: ga_sessions {
         end;;
   }
 
+## Membership Goals
+  measure: membership_goal_trial_start {
+    view_label: "Membership Goals"
+    label: "Goal 1: Trial Start"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step'
+      and ${hits.eventInfo}.eventaction = 'trial started' then ${id}
+       end;;
+  }
+
+  measure: membership_goal_register {
+    view_label: "Membership Goals"
+    label: "Goal 2: Register"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'account create'
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventaction, r'^success.*')
+      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing).*') then ${id}
+       end;;
+  }
+
+  measure: membership_goal_viewed_video_player {
+    view_label: "Membership Goals"
+    label: "Goal 3: Viewed Video Player"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'video player content' then ${id}
+       end;;
+  }
+
+  measure: membership_goal_start_signup {
+    view_label: "Membership Goals"
+    label: "Goal 4: Start Signup"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step' then ${id}
+       end;;
+  }
+
+  measure: membership_goal_used_site_search {
+    view_label: "Membership Goals"
+    label: "Goal 5: Used Site Search"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'site search results'
+      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing).*') then ${id}
+       end;;
+  }
+
+  measure: membership_goal_material_download {
+    view_label: "Membership Goals"
+    label: "Goal 6: Material Download"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'material download' then ${id}
+       end;;
+  }
+
+  measure: membership_goal_select_payment_method {
+    view_label: "Membership Goals"
+    label: "Goal 7: Select Payment Method"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step'
+       and ${hits.eventInfo}.eventaction = 'select payment method' then ${id}
+       end;;
+  }
+
+  measure: membership_goal_selected_plan {
+    view_label: "Membership Goals"
+    label: "Goal 8: Selected Plan"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step'
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'(year|month)') then ${id}
+       end;;
+  }
+
+  measure: membership_goal_trial_start_monthly {
+    view_label: "Membership Goals"
+    label: "Goal 9: Trial Start Monthly"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step'
+       and ${hits.eventInfo}.eventaction = 'trial started'
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*month.*') then ${id}
+       end;;
+  }
+
+  measure: membership_goal_trial_start_annual {
+    view_label: "Membership Goals"
+    label: "Goal 10: Trial Start Annual"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step'
+       and ${hits.eventInfo}.eventaction = 'trial started'
+       and REGEXP_CONTAINS(${hits.eventInfo}.eventlabel,r'.*year.*') then ${id}
+       end;;
+  }
+
+  measure: membership_goal_no_trial_activation {
+    view_label: "Membership Goals"
+    label: "Goal 11: No Trial Activation"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step'
+       and ${hits.eventInfo}.eventaction = 'no trial activation' then ${id}
+       end;;
+  }
+
+
     measure: distinct_sessions {
       type: count_distinct
       sql: ${id} ;;
