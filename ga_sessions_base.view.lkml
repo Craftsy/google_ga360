@@ -33,14 +33,13 @@ view: ga_sessions {
 
     dimension: tha_real_user_id {
       label: "User ID"
-      type: string
+      type: number
       sql: (
               select d.value
               from UNNEST(${TABLE}.customDimensions) as d
               where d.index = 2
                 and d.value is not null
-                and d.value not like '%-%'
-                and d.value not like '%&%'
+                and REGEXP_CONTAINS(d.value, r'[a-zA-Z]') = false
             );;
     }
 
