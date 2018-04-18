@@ -253,6 +253,16 @@ view: ga_sessions {
        end;;
   }
 
+  measure: goal_subscription {
+    view_label: "Goals"
+    label: "Goal 13: Subscription"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'membership signup step'
+        and REGEXP_CONTAINS(${hits.eventInfo}.eventaction, r'(trial started|no trial activation)') then ${id}
+        end;;
+  }
+
   measure: goal_view_paid_listing {
     view_label: "Goals"
     label: "Goal 16: View Paid Listing"
