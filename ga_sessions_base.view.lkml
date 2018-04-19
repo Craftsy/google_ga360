@@ -141,6 +141,15 @@ view: ga_sessions {
          end;;
   }
 
+  dimension: plan_type {
+    type: string
+    sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and REGEXP_CONTAINS(${hits_eventInfo.eventLabel}, r'(.*)year(.*)') then 'year'
+            when ${hits_eventInfo.eventCategory} = 'membership signup step' and REGEXP_CONTAINS(${hits_eventInfo.eventLabel}, r'(.*)month(.*)') then 'month'
+            else 'month'
+         end
+    ;;
+  }
+
 ##
 ### Session Level Measures
 ##
