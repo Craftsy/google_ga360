@@ -6,10 +6,6 @@ include: "*.view.lkml"
 # include all the dashboards from the bigqury_ga_sessions project
 include: "*.dashboard.lkml"
 
-#include: "/data_virtuality/*.view.lkml"
-
-include: "/data_virtuality/dim_customer.view"
-
 explore: ga_sessions {
   label: "Google Anayltics Sessions"
   extends: [ga_sessions_explore]

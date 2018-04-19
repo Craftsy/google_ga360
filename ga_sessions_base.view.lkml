@@ -2,8 +2,9 @@ include: "*.view.lkml"
 
 view: ga_sessions {
    sql_table_name: `129435859.ga_sessions_*` ;;
+
     ##
-    ### Session Level Dimensions
+    ### Session Level Dimensions (Default)
     ##
     dimension: partition_date {
       type: date_time
@@ -29,18 +30,6 @@ view: ga_sessions {
     dimension: first_time_visitor {
       type: yesno
       sql: ${visitnumber} = 1 ;;
-    }
-
-    dimension: tha_real_user_id {
-      label: "User ID"
-      type: string
-      sql: (
-              select d.value
-              from UNNEST(${TABLE}.customDimensions) as d
-              where d.index = 2
-                and d.value is not null
-                and REGEXP_CONTAINS(d.value, r'[a-zA-Z]') = false
-            );;
     }
 
     dimension: visitnumbertier {
@@ -91,32 +80,20 @@ view: ga_sessions {
       label: "Marketing Channel Summary"
     }
 
-
-    # subrecords
-    dimension: geoNetwork {
-      hidden: yes
-    }
-
-    dimension: totals {
-      hidden:yes
-    }
-
-    dimension: trafficSource {
-      hidden:yes
-    }
-
-    dimension: device {
-      hidden:yes
-    }
-
-    dimension: hits {
-      hidden:yes
-    }
-
-    dimension: hits_eventInfo {
-      hidden:yes
-    }
-
+##
+### Custom Session-Level Dimensions
+##
+  dimension: tha_real_user_id {
+    label: "User ID"
+    type: string
+    sql: (
+              select d.value
+              from UNNEST(${TABLE}.customDimensions) as d
+              where d.index = 2
+                and d.value is not null
+                and REGEXP_CONTAINS(d.value, r'[a-zA-Z]') = false
+            );;
+  }
 
   dimension: channelType {
     label: "Channel Type"
@@ -135,13 +112,15 @@ view: ga_sessions {
   }
 
   dimension: subscription_type {
+    label: "Subscription Type"
     type: string
     sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and ${hits_eventInfo.eventAction} = 'trial started' then 'trial'
             when ${hits_eventInfo.eventCategory} = 'membership signup step' and ${hits_eventInfo.eventAction} = 'no trial activation' then 'paid sub'
          end;;
   }
 
-  dimension: plan_type {
+  dimension: subscription_plan_type {
+    label: "Subscription Plan Type"
     type: string
     sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and REGEXP_CONTAINS(${hits_eventInfo.eventLabel}, r'(.*)year(.*)') then 'year'
             when ${hits_eventInfo.eventCategory} = 'membership signup step' and REGEXP_CONTAINS(${hits_eventInfo.eventLabel}, r'(.*)month(.*)') then 'month'
@@ -151,7 +130,7 @@ view: ga_sessions {
   }
 
 ##
-### Session Level Measures
+### Custom Session-Level Measures
 ##
 
 ## Conversion Rates for Goals
@@ -428,7 +407,7 @@ view: ga_sessions {
        end;;
   }
 
-
+## Default session level measures
     measure: distinct_sessions {
       type: count_distinct
       sql: ${id} ;;
@@ -473,6 +452,32 @@ view: ga_sessions {
         value: "<> 1"
       }
   }
+
+  # subrecords
+  # ignore these they are the fields that we unnest into their own views
+  dimension: geoNetwork {
+    hidden: yes
+  }
+
+  dimension: totals {
+    hidden:yes
+  }
+
+  dimension: trafficSource {
+    hidden:yes
+  }
+
+  dimension: device {
+    hidden:yes
+  }
+
+  dimension: hits {
+    hidden:yes
+  }
+
+  dimension: hits_eventInfo {
+    hidden:yes
+  }
 }
 
 view: hits_appInfo {
@@ -497,12 +502,6 @@ view: hits {
 
 view: hits_page {
   extends: [hits_page_base]
-
-  dimension: full_page_path {
-    label: "Full Page Path"
-    type: string
-    sql: concat(${hostName}, ${pagePath}) ;;
-  }
 }
 
 # -- Ecommerce Fields
@@ -514,8 +513,6 @@ view: hits_transaction {
 view: hits_item {
   #extends: [hits_item_base]
 }
-
-# -- Advertising Fields
 
 view: adwordsClickInfo {
   #extends: [adwordsClickInfo_base]
@@ -553,11 +550,7 @@ view: hits_social {
 
   dimension: socialInteractionTarget {hidden: yes}
 
-  #dimension: socialNetwork {hidden: yes}
-
   dimension: uniqueSocialInteractions {hidden: yes}
-
-  #dimension: hasSocialSourceReferral {hidden: yes}
 
   dimension: socialInteractionNetworkAction {hidden: yes}
 }

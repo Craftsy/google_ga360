@@ -14,6 +14,12 @@ view: hits_page_base {
     }
   }
 
+  dimension: full_page_path {
+    label: "Full Page Path"
+    type: string
+    sql: concat(${hostName}, ${pagePath}) ;;
+  }
+
   dimension: page_type {
     label: "Page Type"
     type: string
