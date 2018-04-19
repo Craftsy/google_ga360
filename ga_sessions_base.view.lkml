@@ -144,11 +144,30 @@ dimension: live_sub_session  {
 
 ## Conversion Rates for Goals
   measure: goal_view_paid_listing_conversion_rate {
-    label: "View Paid Listing Conversion Rate"
+    view_label: "Goals"
+    label: "Goal 16: View Paid Listing Conversion Rate"
     type: number
     value_format_name: percent_1
     sql: ${goal_view_paid_listing} / ${distinct_sessions};;
   }
+
+  measure: goal_subscription_conversion_rate {
+    label: "Goal 13: Subscription Conversion Rate"
+    view_label: "Goals"
+    type: number
+    value_format_name: percent_1
+    sql: ${goal_subscription} / ${distinct_sessions};;
+  }
+
+  measure: membership_goal_trail_start_conversion_rate {
+    label: "Goal 1: Trial Start Conversion Rate"
+    view_label: "Membership Goals"
+    type: number
+    value_format_name: percent_1
+    sql: ${membership_goal_trial_start} / ${membership_sessions};;
+  }
+
+
 
   measure: session_trends {
     view_label: "Sessions"
@@ -312,7 +331,8 @@ dimension: live_sub_session  {
     type: count_distinct
     sql: case
       when ${hits.eventInfo}.eventcategory = 'membership signup step'
-      and ${hits.eventInfo}.eventaction = 'trial started' then ${id}
+      and ${hits.eventInfo}.eventaction = 'trial started'
+      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
        end;;
   }
 
@@ -417,10 +437,19 @@ dimension: live_sub_session  {
   }
 
 ## Default session level measures
+
     measure: distinct_sessions {
       type: count_distinct
       sql: ${id} ;;
     }
+
+  measure: membership_sessions {
+    view_label: "Membership Goals"
+    label: "Membership Sessions"
+    type: count_distinct
+    sql: case when REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
+        end;;
+  }
 
     measure: session_count {
       type: count
