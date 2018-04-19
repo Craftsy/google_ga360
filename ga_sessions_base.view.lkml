@@ -117,7 +117,6 @@ view: ga_sessions {
       hidden:yes
     }
 
-##
 
   dimension: channelType {
     label: "Channel Type"
@@ -135,6 +134,14 @@ view: ga_sessions {
     sql:  lower(concat(${trafficSource.source}, " / ", ${channelGrouping}));;
   }
 
+  dimension: subscription_type {
+    type: string
+    sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and ${hits_eventInfo.eventAction} = 'trial started' then 'trial'
+            when ${hits_eventInfo.eventCategory} = 'membership signup step' and ${hits_eventInfo.eventAction} = 'no trial activation' then 'paid sub'
+         end;;
+  }
+
+##
 ### Session Level Measures
 ##
 
