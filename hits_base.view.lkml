@@ -4,7 +4,7 @@ view: hits_base {
     dimension: id {
       label: "Hit ID"
       primary_key: yes
-      sql: CONCAT(${ga_sessions.id},'|',FORMAT('%05d',${hitNumber})) ;;
+      sql: CONCAT(${TABLE}.id,'|',FORMAT('%05d',${hitNumber})) ;;
     }
 
     dimension: hitNumber {
@@ -16,7 +16,7 @@ view: hits_base {
     dimension_group: hit {
       timeframes: [date,day_of_week,fiscal_quarter,week,month,year,month_name,month_num,week_of_year]
       type: time
-      sql: TIMESTAMP_MILLIS(${ga_sessions.visitStartSeconds}*1000 + ${TABLE}.time) ;;
+      sql: TIMESTAMP_MILLIS(${TABLE}.visitStartSeconds*1000 + ${TABLE}.time) ;;
     }
 
     dimension: hour {}

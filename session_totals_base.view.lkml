@@ -4,7 +4,7 @@ view: session_totals_base {
     dimension: id {
       primary_key: yes
       hidden: yes
-      sql: ${ga_sessions.id} ;;
+      sql: ${TABLE}.id ;;
     }
 
   dimension: timeOnScreen_total_unique{
@@ -34,7 +34,7 @@ view: session_totals_base {
 
     measure: hits_average_per_session {
       type: number
-      sql: 1.0 * ${hits_total} / NULLIF(${ga_sessions.session_count},0) ;;
+      sql: 1.0 * ${hits_total} / NULLIF(${TABLE}.session_count,0) ;;
       value_format_name: decimal_2
     }
 
@@ -53,14 +53,14 @@ view: session_totals_base {
     measure: timeonsite_average_per_session {
       label: "Time On Site Average Per Session"
       type: number
-      sql: 1.0 * ${timeonsite_total} / NULLIF(${ga_sessions.session_count},0) ;;
+      sql: 1.0 * ${timeonsite_total} / NULLIF(${TABLE}.session_count,0) ;;
       value_format_name: decimal_2
     }
 
     measure: page_views_session {
       label: "Page Views Per Session"
       type: number
-      sql: 1.0 * ${pageviews_total} / NULLIF(${ga_sessions.session_count},0) ;;
+      sql: 1.0 * ${pageviews_total} / NULLIF(${TABLE}.session_count,0) ;;
       value_format_name: decimal_2
     }
 
@@ -71,7 +71,7 @@ view: session_totals_base {
 
     measure: bounce_rate {
       type:  number
-      sql: 1.0 * ${bounces_total} / NULLIF(${ga_sessions.session_count},0) ;;
+      sql: 1.0 * ${bounces_total} / NULLIF(${TABLE}.session_count,0) ;;
       value_format_name: percent_2
     }
 
