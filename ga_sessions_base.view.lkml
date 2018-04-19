@@ -48,12 +48,12 @@ view: ga_sessions {
       label: "Full Visitor ID"
     }
 
-    dimension: visitStartSeconds {
-      label: "Visit Start Seconds"
-      type: date
-      sql: TIMESTAMP_SECONDS(${TABLE}.visitStarttime) ;;
-      hidden: yes
-    }
+    #dimension: visitStartSeconds {
+     # label: "Visit Start Seconds"
+      #type: date
+      #sql: TIMESTAMP_SECONDS(${TABLE}.visitStarttime) ;;
+      #hidden: yes
+    #}
 
     ## referencing partition_date for demo purposes only. Switch this dimension to reference visistStartSeconds
     dimension_group: visitStart {
