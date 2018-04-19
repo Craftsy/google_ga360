@@ -518,6 +518,10 @@ view: adwordsClickInfo {
   #extends: [adwordsClickInfo_base]
 }
 
+view: sourcePropertyInfo {
+  extends: [hits_sourcePropertyInfo_base]
+}
+
 view: hits_publisher {
   #extends: [hits_publisher_base]   # Comment out this line to remove fields
 }

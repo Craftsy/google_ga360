@@ -20,5 +20,6 @@ view: hits_eventinfo_base {
   dimension: play {
     sql: ${eventAction} = "play" ;;
     type: yesno
+    hidden: yes
   }
 }
