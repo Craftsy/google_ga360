@@ -121,6 +121,12 @@ explore: sessions {
     relationship: one_to_one
   }
 
+  join: sourcePropertyInfo {
+    view_label: "Source Property Info"
+    sql: LEFT JOIN UNNEST([${hits.sourcePropertyInfo}]) as sourceProperty ;;
+    relationship: one_to_one
+  }
+
   join: hits_customdimensions {
     view_label: "Site Activity"
     sql: LEFT JOIN UNNEST(${hits.customDimensions}) as hits_customDimensions ;;

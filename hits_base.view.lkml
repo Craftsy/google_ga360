@@ -49,6 +49,7 @@ view: hits_base {
     dimension: item {hidden:yes}
     dimension: contentinfo {hidden:yes}
     dimension: social {hidden: yes}
+    dimension: sourcePropertyInfo {hidden:yes}
     dimension: publisher {hidden: yes}
     dimension: appInfo {hidden: yes}
     dimension: contentInfo {hidden: yes}
