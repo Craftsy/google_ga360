@@ -28,6 +28,12 @@ explore: membership {
     relationship: one_to_one
   }
 
+  join: hits_customdimensions {
+    view_label: "Membership Site Activity"
+    sql: LEFT JOIN UNNEST(${hits.customDimensions}) as hits_customDimensions ;;
+    relationship: one_to_many
+  }
+
   join: hits_page {
     view_label: "Membership Page"
     sql: LEFT JOIN UNNEST([${hits.page}]) as hits_page ;;
