@@ -52,6 +52,7 @@ explore: ga_sessions {
   persist_for: "1 hour"
   from: ga_sessions
   label: "Google Analytics Sessions"
+  view_label: "Sessions"
 
   always_filter: {
     filters: {

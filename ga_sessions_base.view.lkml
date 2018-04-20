@@ -83,6 +83,14 @@ view: ga_sessions {
 ##
 ### Custom Session-Level Dimensions
 ##
+dimension: hostname_unlimited {
+  type: string
+  sql: case when ${hits_page.hostName} IN ( 'unlimited.craftsy.com', 'membership.craftsy.com', 'landing.craftsy.com' ) then 'yes'
+          else 'no'
+        end;;
+}
+
+
   dimension: tha_real_user_id {
     label: "User ID"
     type: string
@@ -136,6 +144,23 @@ dimension: live_sub_session  {
             and ${hits_eventInfo.eventAction} != 'trial started' then 'yes'
           else 'no'
        end;;
+}
+
+measure: coupon_success_count {
+  type: count_distinct
+  sql: case when ${hits_customdimensions.coupon_failure_message} is null then ${id}
+          end;;
+}
+
+measure: coupon_failure_count {
+  type: count_distinct
+  sql: case when ${hits_customdimensions.coupon_failure_message} is not null then ${id}
+          end;;
+}
+
+measure: total_coupon_tries {
+  type: number
+  sql: ${coupon_failure_count} + ${coupon_success_count};;
 }
 
 ##
