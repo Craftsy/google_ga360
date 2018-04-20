@@ -48,14 +48,14 @@ explore: membership {
 
 }
 
-explore: sessions {
+explore: ga_sessions {
   persist_for: "1 hour"
   from: ga_sessions
   label: "Google Analytics Sessions"
 
   always_filter: {
     filters: {
-      field: sessions.partition_date
+      field: ga_sessions.partition_date
       value: "7 days ago for 7 days"
       ## Partition Date should always be set to a recent date to avoid runaway queries
     }
@@ -66,28 +66,28 @@ explore: sessions {
   ##
   join: totals {
     view_label: "Session Totals"
-    sql: LEFT JOIN UNNEST([${sessions.totals}]) as totals ;;
+    sql: LEFT JOIN UNNEST([${ga_sessions.totals}]) as totals ;;
     relationship: one_to_one
   }
   join: trafficSource {
     view_label: "Session: Traffic Source"
-    sql: LEFT JOIN UNNEST([${sessions.trafficSource}]) as trafficSource ;;
+    sql: LEFT JOIN UNNEST([${ga_sessions.trafficSource}]) as trafficSource ;;
     relationship: one_to_one
   }
 
   join: device {
     view_label: "Device"
-    sql: LEFT JOIN UNNEST([${sessions.device}]) as device ;;
+    sql: LEFT JOIN UNNEST([${ga_sessions.device}]) as device ;;
     relationship: one_to_one
   }
   join: geoNetwork {
     view_label: "Session: Geo Network"
-    sql: LEFT JOIN UNNEST([${sessions.geoNetwork}]) as geoNetwork ;;
+    sql: LEFT JOIN UNNEST([${ga_sessions.geoNetwork}]) as geoNetwork ;;
     relationship: one_to_one
   }
   join: hits {
     view_label: "Session: Hits"
-    sql: LEFT JOIN UNNEST(${sessions.hits}) as hits ;;
+    sql: LEFT JOIN UNNEST(${ga_sessions.hits}) as hits ;;
     relationship: one_to_many
   }
   join: hits_page {
@@ -145,7 +145,7 @@ explore: sessions {
   }
   join: first_hit {
     from: hits
-    sql: LEFT JOIN UNNEST(${sessions.hits}) as first_hit ;;
+    sql: LEFT JOIN UNNEST(${ga_sessions.hits}) as first_hit ;;
     relationship: one_to_one
     sql_where: ${first_hit.hitNumber} = 1 ;;
     fields: [first_hit.page]

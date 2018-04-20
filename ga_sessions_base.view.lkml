@@ -131,7 +131,7 @@ view: ga_sessions {
 
 dimension: live_sub_session  {
   type: string
-  sql: case when ${hits_customdimensions.unlimited_active} = '1' or ${hits_customdimensions.unlimited_active} = 'true'
+  sql: case when (${hits_customdimensions.unlimited_active} = '1' or ${hits_customdimensions.unlimited_active} = 'true')
             and ${hits_eventInfo.eventAction} != 'no trial activation'
             and ${hits_eventInfo.eventAction} != 'trial started' then 'yes'
           else 'no'
