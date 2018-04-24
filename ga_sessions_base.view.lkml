@@ -80,12 +80,15 @@ view: ga_sessions {
       label: "Marketing Channel Summary"
     }
 
+
 ##
 ### Custom Session-Level Dimensions
 ##
 dimension: hostname_unlimited {
   type: string
-  sql: case when ${hits_page.hostName} IN ( 'unlimited.craftsy.com', 'membership.craftsy.com', 'landing.craftsy.com' ) then 'yes'
+  sql: case when REGEXP_CONTAINS(${hits_page.hostName},  r'unlimited.craftsy.com') then 'yes'
+          when REGEXP_CONTAINS(${hits_page.hostName},  r'membership.craftsy.com') then 'yes'
+          when REGEXP_CONTAINS(${hits_page.hostName},  r'landing.craftsy.com' ) then 'yes'
           else 'no'
         end;;
 }
@@ -161,6 +164,12 @@ measure: coupon_failure_count {
 measure: total_coupon_tries {
   type: number
   sql: ${coupon_failure_count} + ${coupon_success_count};;
+}
+
+measure: coupon_success_rate {
+  type: number
+  value_format: "0.00%"
+  sql: ${coupon_success_count} / ${total_coupon_tries} ;;
 }
 
 ##

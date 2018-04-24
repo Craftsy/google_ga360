@@ -32,7 +32,7 @@ view: hits_page_base {
   }
 
   dimension: hostName {
-    label: "Host Name"
+    label: "Hostname"
   }
 
   dimension: pageTitle {
