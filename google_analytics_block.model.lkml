@@ -66,12 +66,12 @@ explore: ga_sessions {
   ### Joins
   ##
   join: totals {
-    view_label: "Session Totals"
+    view_label: "Behavior Metrics"
     sql: LEFT JOIN UNNEST([${ga_sessions.totals}]) as totals ;;
     relationship: one_to_one
   }
   join: trafficSource {
-    view_label: "Session: Traffic Source"
+    view_label: "Marketing Attribution"
     sql: LEFT JOIN UNNEST([${ga_sessions.trafficSource}]) as trafficSource ;;
     relationship: one_to_one
   }
@@ -82,37 +82,37 @@ explore: ga_sessions {
     relationship: one_to_one
   }
   join: geoNetwork {
-    view_label: "Session: Geo Network"
+    view_label: "Geo-Network"
     sql: LEFT JOIN UNNEST([${ga_sessions.geoNetwork}]) as geoNetwork ;;
     relationship: one_to_one
   }
   join: hits {
-    view_label: "Session: Hits"
+    view_label: "Hits"
     sql: LEFT JOIN UNNEST(${ga_sessions.hits}) as hits ;;
     relationship: one_to_many
   }
   join: hits_page {
-    view_label: "Session: Hits: Page"
+    view_label: "Page"
     sql: LEFT JOIN UNNEST([${hits.page}]) as hits_page ;;
     relationship: one_to_one
   }
   join: hits_transaction {
-    view_label: "Session: Hits: Transaction"
+    view_label: "Transaction"
     sql: LEFT JOIN UNNEST([${hits.transaction}]) as hits_transaction ;;
     relationship: one_to_one
   }
   join: hits_item {
-    view_label: "Session: Hits: Item"
+    view_label: "Item"
     sql: LEFT JOIN UNNEST([${hits.item}]) as hits_item ;;
     relationship: one_to_one
   }
   join: hits_social {
-    view_label: "Session: Hits: Social"
+    view_label: "Social"
     sql: LEFT JOIN UNNEST([${hits.social}]) as hits_social ;;
     relationship: one_to_one
   }
   join: hits_publisher {
-    view_label: "Session: Hits: Publisher"
+    view_label: "Publisher"
     sql: LEFT JOIN UNNEST([${hits.publisher}]) as hits_publisher ;;
     relationship: one_to_one
   }
@@ -123,7 +123,7 @@ explore: ga_sessions {
   }
 
   join: hits_eventInfo{
-    view_label: "Session: Hits: Events Info"
+    view_label: "Events Info"
     sql: LEFT JOIN UNNEST([${hits.eventInfo}]) as hits_eventInfo ;;
     relationship: one_to_one
   }
@@ -152,7 +152,7 @@ explore: ga_sessions {
     fields: [first_hit.page]
   }
   join: first_page {
-    view_label: "Session: First Page Visited"
+    view_label: "Landing Page"
     from: hits_page
     sql: LEFT JOIN UNNEST([${first_hit.page}]) as first_page ;;
     relationship: one_to_one

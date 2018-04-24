@@ -11,6 +11,7 @@ view: session_totals_base {
     label: "Time On Screen Total"
     type: number
     sql: ${TABLE}.timeOnScreen ;;
+    hidden: yes
   }
 
   dimension: timeonsite_tier {
@@ -19,6 +20,7 @@ view: session_totals_base {
     sql: ${TABLE}.timeonsite ;;
     tiers: [0,15,30,60,120,180,240,300,600]
     style: integer
+    hidden: yes
   }
 
     measure: visits_total {
@@ -39,6 +41,7 @@ view: session_totals_base {
     }
 
     measure: pageviews_total {
+      view_label: "Page"
       label: "Page Views"
       type: sum
       sql: ${TABLE}.pageviews ;;

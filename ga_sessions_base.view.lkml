@@ -151,23 +151,27 @@ dimension: live_sub_session  {
 }
 
 measure: coupon_success_count {
+  view_label: "Coupon"
   type: count_distinct
   sql: case when ${hits_customdimensions.coupon_failure_message} is null then ${id}
           end;;
 }
 
 measure: coupon_failure_count {
+  view_label: "Coupon"
   type: count_distinct
   sql: case when ${hits_customdimensions.coupon_failure_message} is not null then ${id}
           end;;
 }
 
 measure: total_coupon_tries {
+  view_label: "Coupon"
   type: number
   sql: ${coupon_failure_count} + ${coupon_success_count};;
 }
 
 measure: coupon_success_rate {
+  view_label: "Coupon"
   type: number
   value_format: "0.00%"
   sql: ${coupon_success_count} / ${total_coupon_tries} ;;
@@ -196,7 +200,7 @@ measure: coupon_success_rate {
 
   measure: membership_goal_trail_start_conversion_rate {
     label: "Goal 1: Trial Start Conversion Rate"
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     type: number
     value_format_name: percent_1
     sql: ${membership_goal_trial_start} / ${membership_sessions};;
@@ -359,9 +363,40 @@ measure: coupon_success_rate {
         end;;
   }
 
-## Membership Goals
+##
+### Membership Logged-In Goals
+##
+  measure: membership_goal_viewed_video_player {
+    view_label: "Membership Logged-In Goals"
+    label: "Goal 3: Viewed Video Player"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'video player content' then ${id}
+       end;;
+  }
+
+  measure: membership_goal_used_site_search {
+    view_label: "Membership Logged-In Goals"
+    label: "Goal 5: Used Site Search"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'site search results'
+      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
+       end;;
+  }
+
+  measure: membership_goal_material_download {
+    view_label: "Membership Logged-In Goals"
+    label: "Goal 6: Material Download"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'material download' then ${id}
+       end;;
+  }
+
+## Membership Acquisition Goals
   measure: membership_goal_trial_start {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 1: Trial Start"
     type: count_distinct
     sql: case
@@ -372,7 +407,7 @@ measure: coupon_success_rate {
   }
 
   measure: membership_goal_register {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 2: Register"
     type: count_distinct
     sql: case
@@ -382,17 +417,8 @@ measure: coupon_success_rate {
        end;;
   }
 
-  measure: membership_goal_viewed_video_player {
-    view_label: "Membership Goals"
-    label: "Goal 3: Viewed Video Player"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'video player content' then ${id}
-       end;;
-  }
-
   measure: membership_goal_start_signup {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 4: Start Signup"
     type: count_distinct
     sql: case
@@ -400,27 +426,8 @@ measure: coupon_success_rate {
        end;;
   }
 
-  measure: membership_goal_used_site_search {
-    view_label: "Membership Goals"
-    label: "Goal 5: Used Site Search"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'site search results'
-      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
-       end;;
-  }
-
-  measure: membership_goal_material_download {
-    view_label: "Membership Goals"
-    label: "Goal 6: Material Download"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'material download' then ${id}
-       end;;
-  }
-
   measure: membership_goal_select_payment_method {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 7: Select Payment Method"
     type: count_distinct
     sql: case
@@ -430,7 +437,7 @@ measure: coupon_success_rate {
   }
 
   measure: membership_goal_selected_plan {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 8: Selected Plan"
     type: count_distinct
     sql: case
@@ -440,7 +447,7 @@ measure: coupon_success_rate {
   }
 
   measure: membership_goal_trial_start_monthly {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 9: Trial Start Monthly"
     type: count_distinct
     sql: case
@@ -451,7 +458,7 @@ measure: coupon_success_rate {
   }
 
   measure: membership_goal_trial_start_annual {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 10: Trial Start Annual"
     type: count_distinct
     sql: case
@@ -462,7 +469,7 @@ measure: coupon_success_rate {
   }
 
   measure: membership_goal_no_trial_activation {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 11: No Trial Activation"
     type: count_distinct
     sql: case
@@ -479,7 +486,7 @@ measure: coupon_success_rate {
     }
 
   measure: membership_sessions {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Membership Sessions"
     type: count_distinct
     sql: case when REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}

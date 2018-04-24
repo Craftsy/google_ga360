@@ -4,41 +4,54 @@ view: hits_base {
     dimension: id {
       label: "Hit ID"
       primary_key: yes
+      hidden: yes
       sql: CONCAT(${TABLE}.id,'|',FORMAT('%05d',${hitNumber})) ;;
     }
 
     dimension: hitNumber {
       label: "Hit Number"
+      hidden: yes
     }
 
-    dimension: time {}
+    dimension: time {
+      hidden: yes
+    }
 
     dimension_group: hit {
       timeframes: [date,day_of_week,fiscal_quarter,week,month,year,month_name,month_num,week_of_year]
       type: time
+      hidden: yes
       sql: TIMESTAMP_MILLIS(${TABLE}.visitStartSeconds*1000 + ${TABLE}.time) ;;
     }
 
-    dimension: hour {}
+    dimension: hour {
+      hidden: yes
+    }
 
-    dimension: minute {}
+    dimension: minute {
+      hidden: yes
+    }
 
     dimension: isSecure {
       label: "Secure"
       type: yesno
+      hidden: yes
     }
 
     dimension: isiInteraction {
       label: "Interaction"
       type: yesno
+      hidden: yes
     }
 
     dimension: referer {
       label: "Referer"
       type: string
+      hidden: yes
     }
 
     measure: count {
+      label: "Hits Count"
       type: count
       drill_fields: [hits.detail*]
     }
