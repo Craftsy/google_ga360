@@ -19,6 +19,7 @@ view: ga_sessions {
 
     dimension: visitorId {
       label: "Visitor ID"
+      hidden: yes
     }
 
     dimension: visitnumber {
@@ -42,23 +43,18 @@ view: ga_sessions {
 
     dimension: visitId {
       label: "Visit ID"
+      hidden: yes
     }
 
     dimension: fullVisitorId {
       label: "Full Visitor ID"
+      hidden: yes
     }
-
-    #dimension: visitStartSeconds {
-     # label: "Visit Start Seconds"
-      #type: date
-      #sql: TIMESTAMP_SECONDS(${TABLE}.visitStarttime) ;;
-      #hidden: yes
-    #}
 
     ## referencing partition_date for demo purposes only. Switch this dimension to reference visistStartSeconds
     dimension_group: visitStart {
       timeframes: [date,day_of_week,fiscal_quarter,week,month,year,month_name,month_num,week_of_year]
-      label: "Visit Start"
+      label: "Session Start Date"
       type: time
       sql: (TIMESTAMP(${partition_date})) ;;
     }
@@ -70,6 +66,7 @@ view: ga_sessions {
 
     dimension: socialEngagementType {
       label: "Social Engagement Type"
+      hidden: yes
     }
 
     dimension: userid {
@@ -80,19 +77,9 @@ view: ga_sessions {
       label: "Marketing Channel Summary"
     }
 
-
 ##
 ### Custom Session-Level Dimensions
 ##
-dimension: hostname_unlimited {
-  type: string
-  sql: case when REGEXP_CONTAINS(${hits_page.hostName},  r'unlimited.craftsy.com') then 'yes'
-          when REGEXP_CONTAINS(${hits_page.hostName},  r'membership.craftsy.com') then 'yes'
-          when REGEXP_CONTAINS(${hits_page.hostName},  r'landing.craftsy.com' ) then 'yes'
-          when ${hits_page.hostName} is null then 'yes'
-          else 'no'
-        end;;
-}
 
 dimension: tha_real_user_id {
   label: "User ID"
@@ -108,6 +95,7 @@ dimension: tha_real_user_id {
 }
 
   dimension: channelType {
+    view_label: "Marketing Acquisition Goals"
     label: "Channel Type"
     type: string
     sql:  case
@@ -124,6 +112,7 @@ dimension: tha_real_user_id {
   }
 
   dimension: subscription_type {
+    view_label: "Unlimited Subscription"
     label: "Subscription Type"
     type: string
     sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and ${hits_eventInfo.eventAction} = 'trial started' then 'trial'
@@ -132,6 +121,7 @@ dimension: tha_real_user_id {
   }
 
   dimension: subscription_plan_type {
+    view_label: "Unlimited Subscription"
     label: "Subscription Plan Type"
     type: string
     sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and REGEXP_CONTAINS(${hits_eventInfo.eventLabel}, r'(.*)year(.*)') then 'year'
@@ -142,6 +132,7 @@ dimension: tha_real_user_id {
   }
 
 dimension: live_sub_session  {
+  view_label: "Unlimited Subscription"
   type: string
   sql: case when (${hits_customdimensions.unlimited_active} = '1' or ${hits_customdimensions.unlimited_active} = 'true')
             and ${hits_eventInfo.eventAction} != 'no trial activation'
@@ -516,7 +507,8 @@ measure: coupon_success_rate {
     }
 
     measure: first_time_visitors {
-      label: "First Time Visitors"
+      view_label: "Users"
+      label: "New Visitors"
       type: count
       filters: {
         field: visitnumber

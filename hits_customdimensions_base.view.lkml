@@ -186,6 +186,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: unlimited_active {
+    view_label: "Unlimited Subscription"
     label: "Unlimited Active"
     type: string
     sql: (
