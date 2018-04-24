@@ -93,7 +93,7 @@ dimension: hostname_unlimited {
         end;;
 }
 
-dimension: user_id {
+dimension: tha_real_user_id {
   label: "User ID"
   type: number
   sql: (
