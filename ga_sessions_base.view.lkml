@@ -93,18 +93,18 @@ dimension: hostname_unlimited {
         end;;
 }
 
-
-  dimension: tha_real_user_id {
-    label: "User ID"
-    type: string
-    sql: (
-              select d.value
-              from UNNEST(${TABLE}.customDimensions) as d
-              where d.index = 2
-                and d.value is not null
-                and REGEXP_CONTAINS(d.value, r'[a-zA-Z]') = false
-            );;
-  }
+dimension: user_id {
+  label: "User ID"
+  type: number
+  sql: (
+    select
+      cast(safe_cast(d.value as float64) as int64) as user_id
+    from UNNEST(${TABLE}.customDimensions) as d
+    where d.index = 2
+      and d.value is not null
+  ) ;;
+  value_format: "0"
+}
 
   dimension: channelType {
     label: "Channel Type"
