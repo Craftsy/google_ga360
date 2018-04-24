@@ -89,6 +89,7 @@ dimension: hostname_unlimited {
   sql: case when REGEXP_CONTAINS(${hits_page.hostName},  r'unlimited.craftsy.com') then 'yes'
           when REGEXP_CONTAINS(${hits_page.hostName},  r'membership.craftsy.com') then 'yes'
           when REGEXP_CONTAINS(${hits_page.hostName},  r'landing.craftsy.com' ) then 'yes'
+          when ${hits_page.hostName} is null then 'yes'
           else 'no'
         end;;
 }
