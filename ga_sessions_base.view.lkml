@@ -23,18 +23,19 @@ view: ga_sessions {
     }
 
     dimension: visitnumber {
-      label: "Visit Number"
+      label: "Session Number"
       type: number
       description: "The session number for this user. If this is the first session, then this is set to 1."
     }
 
     dimension: first_time_visitor {
+      label: "New User"
       type: yesno
       sql: ${visitnumber} = 1 ;;
     }
 
     dimension: visitnumbertier {
-      label: "Visit Number Tier"
+      label: "Session Number Tier"
       type: tier
       tiers: [1,2,5,10,15,20,50,100]
       style: integer
@@ -490,12 +491,14 @@ measure: coupon_success_rate {
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.transactions_count, totals.transactionRevenue_total]
     }
     measure: unique_visitors {
+      label: "Unique Users"
       type: count_distinct
       sql: ${fullVisitorId} ;;
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.hits, totals.page_views, totals.timeonsite]
     }
 
-    measure: average_sessions_ver_visitor {
+    measure: average_sessions_per_visitor {
+      label: "Average Sessions Per User"
       type: number
       sql: 1.0 * (${session_count}/NULLIF(${unique_visitors},0))  ;;
       value_format_name: decimal_2
@@ -503,12 +506,12 @@ measure: coupon_success_rate {
     }
 
     measure: total_visitors {
+      label: "Total Users"
       type: count
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.hits, totals.page_views, totals.timeonsite]
     }
 
     measure: first_time_visitors {
-      view_label: "Users"
       label: "New Visitors"
       type: count
       filters: {
