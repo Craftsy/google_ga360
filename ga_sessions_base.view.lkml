@@ -77,6 +77,13 @@ view: ga_sessions {
       label: "Marketing Channel Summary"
     }
 
+  dimension: traffic_source{
+    view_label: "Marketing Attribution"
+    label: "Traffic Source"
+    type: string
+    sql:  lower(concat(${trafficSource.source}, " / ", ${channelGrouping}));;
+  }
+
 ##
 ### Custom Session-Level Dimensions
 ##
@@ -103,12 +110,6 @@ dimension: tha_real_user_id {
       when ${channelGrouping} IN ( 'affiliates' , 'big partners' , 'instructor' , 'external email' ) then 'biz dev'
         else 'unpaid'
         end ;;
-  }
-
-  dimension: traffic_source{
-    label: "Traffic Source"
-    type: string
-    sql:  lower(concat(${trafficSource.source}, " / ", ${channelGrouping}));;
   }
 
   dimension: subscription_type {
