@@ -75,6 +75,7 @@ view: ga_sessions {
     }
 
     dimension: channelGrouping {
+      view_label: "Marketing Attribution"
       label: "Marketing Channel Summary"
     }
 
@@ -103,7 +104,7 @@ dimension: tha_real_user_id {
 }
 
   dimension: channelType {
-    view_label: "Marketing Acquisition Goals"
+    view_label: "Marketing Attribution"
     label: "Channel Type"
     type: string
     sql:  case
