@@ -8,7 +8,9 @@ view: trafficsource_base {
     }
 
     dimension: campaign {}
-    dimension: source {}
+    dimension: source {
+      hidden: yes
+    }
     dimension: medium {}
     dimension: keyword {}
 
