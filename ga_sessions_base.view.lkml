@@ -42,6 +42,13 @@ view: ga_sessions {
       sql: ${visitnumber} ;;
     }
 
+    dimension: visitStartSeconds {
+      label: "Visit Start Seconds"
+      type: date
+      sql: TIMESTAMP_SECONDS(${TABLE}.visitStarttime) ;;
+      hidden: yes
+    }
+
     dimension: visitId {
       label: "Visit ID"
       hidden: yes

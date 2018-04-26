@@ -6,48 +6,6 @@ include: "*.view.lkml"
 # include all the dashboards from the bigqury_ga_sessions project
 include: "*.dashboard.lkml"
 
-explore: membership {
-  persist_for: "1 hour"
-  from: ga_sessions
-
-  join: totals {
-    view_label: "Membership Totals"
-    sql: LEFT JOIN UNNEST([${membership.totals}]) as totals ;;
-    relationship: one_to_one
-  }
-
-  join: hits {
-    view_label: "Membership Hits"
-    sql: LEFT JOIN UNNEST(${membership.hits}) as hits ;;
-    relationship: one_to_many
-  }
-
-  join: hits_eventInfo{
-    view_label: "Membership Events Info"
-    sql: LEFT JOIN UNNEST([${hits.eventInfo}]) as hits_eventInfo ;;
-    relationship: one_to_one
-  }
-
-  join: hits_customdimensions {
-    view_label: "Membership Site Activity"
-    sql: LEFT JOIN UNNEST(${hits.customDimensions}) as hits_customDimensions ;;
-    relationship: one_to_many
-  }
-
-  join: hits_page {
-    view_label: "Membership Page"
-    sql: LEFT JOIN UNNEST([${hits.page}]) as hits_page ;;
-    relationship: one_to_one
-  }
-
-  join: trafficSource {
-    view_label: "Membership Traffic Source"
-    sql: LEFT JOIN UNNEST([${membership.trafficSource}]) as trafficSource ;;
-    relationship: one_to_one
-  }
-
-}
-
 explore: ga_sessions {
   persist_for: "1 hour"
   from: ga_sessions
