@@ -38,11 +38,11 @@ view: hits_page_base {
   dimension: hostname_unlimited {
     label: "Hostname Unlimited (Yes/ No)"
     type: string
-    sql: case when REGEXP_CONTAINS(${hostName},  r'unlimited.craftsy.com') then 'yes'
-          when REGEXP_CONTAINS(${hostName},  r'membership.craftsy.com') then 'yes'
-          when REGEXP_CONTAINS(${hostName},  r'landing.craftsy.com' ) then 'yes'
-          when ${hostName} is null then 'yes'
-          else 'no'
+    sql: case when REGEXP_CONTAINS(${hostName},  r'unlimited.craftsy.com') then 'Yes'
+          when REGEXP_CONTAINS(${hostName},  r'membership.craftsy.com') then 'Yes'
+          when REGEXP_CONTAINS(${hostName},  r'landing.craftsy.com' ) then 'Yes'
+          when ${hostName} is null then 'Yes'
+          else 'No'
         end;;
   }
 
