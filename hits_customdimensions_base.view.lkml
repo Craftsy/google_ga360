@@ -191,10 +191,13 @@ view: hits_customdimensions_base {
 
   dimension: unlimited_active {
     view_label: "Unlimited Subscription"
-    label: "Unlimited Active"
+    label: "Unlimited Active (Yes/ No)"
     type: string
     sql: (
-        select s.value
+        select
+          case when s.value = '1' or s.value = 'true' then 'Yes'
+              else 'No'
+          end
         from ${hits.customDimensions} as s
         where s.index = 140
     );;
