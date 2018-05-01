@@ -35,6 +35,7 @@ view: hits_customdimensions_base {
     );;
   }
 
+
   dimension: coupon_failure_message {
     view_label: "Coupon"
     label: "Coupon Failure Message"

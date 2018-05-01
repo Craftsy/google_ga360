@@ -14,22 +14,20 @@ view: hits_page_base {
     }
   }
 
+  dimension: canonical_url {
+    type: string
+    sql: case when ${pagePath} like '%?%' then REGEXP_EXTRACT(${pagePath}, r'(.*)\?')
+        else ${hostName}
+        end;;
+
+  }
+
   dimension: full_page_path {
     label: "Full Page Path"
     type: string
     sql: concat(${hostName}, ${pagePath}) ;;
   }
 
-  dimension: page_type {
-    label: "Page Type"
-    type: string
-    sql: (
-              select d.value
-              from UNNEST(${TABLE}.customDimensions) as d
-              where d.index = 32
-                and d.value is not null
-      ) ;;
-  }
 
   dimension: hostName {
     label: "Hostname"
