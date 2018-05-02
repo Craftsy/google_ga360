@@ -34,7 +34,7 @@ view: hits_appinfo_base {
   dimension: app_unlimited {
     label: "App Unlimited (Yes/ No)"
     type: string
-    sql: case when REGEXP_CONTAINS(${appName},  r'.*Unlimited|Membership).*') then 'Yes'
+    sql: case when REGEXP_CONTAINS(${appName},  r'.*(Unlimited|Membership).*') then 'Yes'
           when ${appName} is null then 'Yes'
           else 'No'
         end;;
