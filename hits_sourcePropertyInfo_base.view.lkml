@@ -2,7 +2,8 @@ view: hits_sourcePropertyInfo_base {
     extension: required
 
     dimension: sourcePropertyDisplayName {
-      label: "Source Property Display Name"
+      view_label: "Device"
+      label: "Display Name"
       type: string
     }
  }

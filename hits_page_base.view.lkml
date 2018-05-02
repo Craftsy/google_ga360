@@ -14,25 +14,32 @@ view: hits_page_base {
     }
   }
 
+  dimension: canonical_url {
+    type: string
+    sql: case when ${pagePath} like '%?%' then REGEXP_EXTRACT(${pagePath}, r'(.*)\?')
+        else ${hostName}
+        end;;
+
+  }
+
   dimension: full_page_path {
     label: "Full Page Path"
     type: string
     sql: concat(${hostName}, ${pagePath}) ;;
   }
 
-  dimension: page_type {
-    label: "Page Type"
-    type: string
-    sql: (
-              select d.value
-              from UNNEST(${TABLE}.customDimensions) as d
-              where d.index = 32
-                and d.value is not null
-      ) ;;
-  }
 
   dimension: hostName {
-    label: "Host Name"
+    label: "Hostname"
+  }
+
+  dimension: hostname_unlimited {
+    label: "Hostname Unlimited (Yes/ No)"
+    type: string
+    sql: case when REGEXP_CONTAINS(${hostName},  r'.*(unlimited|landing|membership).*') then 'Yes'
+          when ${hostName} is null then 'Yes'
+          else 'No'
+        end;;
   }
 
   dimension: pageTitle {

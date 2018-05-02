@@ -8,7 +8,9 @@ view: trafficsource_base {
     }
 
     dimension: campaign {}
-    dimension: source {}
+    dimension: source {
+      hidden: yes
+    }
     dimension: medium {}
     dimension: keyword {}
 
@@ -25,10 +27,12 @@ view: trafficsource_base {
     measure: source_list {
       type: list
       list_field: source
+      hidden: yes
     }
 
     measure: source_count {
       type: count_distinct
+      hidden: yes
       sql: ${source} ;;
       drill_fields: [source, totals.hits, totals.pageviews]
     }

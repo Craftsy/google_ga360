@@ -16,6 +16,7 @@ view: hits_customdimensions_base {
     view_label: "Coupon"
     label: "Coupon (Transaction)"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -34,6 +35,7 @@ view: hits_customdimensions_base {
     );;
   }
 
+
   dimension: coupon_failure_message {
     view_label: "Coupon"
     label: "Coupon Failure Message"
@@ -46,6 +48,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: logged_in {
+    view_label: "Sessions"
     label: "Logged In"
     type: string
     sql: (
@@ -166,6 +169,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: site_search_term {
+    view_label: "Site Search"
     label: "Site Search Term"
     type: string
     sql: (
@@ -176,6 +180,7 @@ view: hits_customdimensions_base {
   }
 
   dimension: site_search_term_num_results {
+    view_label: "Site Search"
     label: "Site Search Term Number of Results"
     type: string
     sql: (
@@ -186,10 +191,14 @@ view: hits_customdimensions_base {
   }
 
   dimension: unlimited_active {
-    label: "Unlimited Active"
+    view_label: "Unlimited Subscription"
+    label: "Unlimited Active (Yes/ No)"
     type: string
     sql: (
-        select s.value
+        select
+          case when s.value = '1' or s.value = 'true' then 'Yes'
+              else 'No'
+          end
         from ${hits.customDimensions} as s
         where s.index = 140
     );;
@@ -198,6 +207,7 @@ view: hits_customdimensions_base {
   dimension: in_app_purchase {
     label: "In-App Purchase"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -208,6 +218,7 @@ view: hits_customdimensions_base {
   dimension: project_associated_listing {
     label: "Project Associated Listing"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -218,6 +229,7 @@ view: hits_customdimensions_base {
   dimension: project_associated_listing_product_line {
     label: "Project Associated Listing Product Line"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -228,6 +240,7 @@ view: hits_customdimensions_base {
   dimension: project_id {
     label: "Project ID"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -238,6 +251,7 @@ view: hits_customdimensions_base {
   dimension: project_name {
     label: "Project Name"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -248,6 +262,7 @@ view: hits_customdimensions_base {
   dimension: project_category {
     label: "Project Cateory"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -258,6 +273,7 @@ view: hits_customdimensions_base {
   dimension: cart_id {
     label: "Cart ID"
     type: string
+    hidden: yes
     sql: (
         select s.value
         from ${hits.customDimensions} as s
@@ -332,6 +348,7 @@ view: hits_customdimensions_base {
   }
 
 dimension: video_playlist_id {
+  view_label: "Video Player"
    label: "Video Playlist Id"
    type: string
       sql: (
@@ -342,6 +359,7 @@ dimension: video_playlist_id {
 }
 
 dimension: video_playlist_name {
+  view_label: "Video Player"
    label: "Video Playlist Name"
    type: string
       sql: (
@@ -352,6 +370,7 @@ dimension: video_playlist_name {
 }
 
 dimension: video_episode_id {
+  view_label: "Video Player"
    label: "Video Episode Id"
    type: string
       sql: (
@@ -362,6 +381,7 @@ dimension: video_episode_id {
 }
 
 dimension: video_episode_name {
+  view_label: "Video Player"
    label: "Video Episode Name"
    type: string
         sql: (
@@ -372,6 +392,7 @@ dimension: video_episode_name {
 }
 
 dimension: video_entrance_component {
+  view_label: "Video Player"
    label: "Video Entrance Component"
    type: string
       sql: (
@@ -384,6 +405,7 @@ dimension: video_entrance_component {
   dimension: offer_code {
     label: "Offer Code"
     type: string
+    hidden: yes
     sql: (
               select s.value
               from ${hits.customDimensions} as s
@@ -392,6 +414,7 @@ dimension: video_entrance_component {
   }
 
   dimension: onsite_link_uq {
+    view_label: "Sessions"
     label: "Onsite Link UQ"
     type: string
     sql: (

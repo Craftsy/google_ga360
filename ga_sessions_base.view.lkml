@@ -19,46 +19,50 @@ view: ga_sessions {
 
     dimension: visitorId {
       label: "Visitor ID"
+      hidden: yes
     }
 
     dimension: visitnumber {
-      label: "Visit Number"
+      label: "Session Number"
       type: number
       description: "The session number for this user. If this is the first session, then this is set to 1."
     }
 
     dimension: first_time_visitor {
+      label: "New User"
       type: yesno
       sql: ${visitnumber} = 1 ;;
     }
 
     dimension: visitnumbertier {
-      label: "Visit Number Tier"
+      label: "Session Number Tier"
       type: tier
       tiers: [1,2,5,10,15,20,50,100]
       style: integer
       sql: ${visitnumber} ;;
     }
 
+    dimension: visitStartSeconds {
+      label: "Visit Start Seconds"
+      type: date
+      sql: TIMESTAMP_SECONDS(${TABLE}.visitStarttime) ;;
+      hidden: yes
+    }
+
     dimension: visitId {
       label: "Visit ID"
+      hidden: yes
     }
 
     dimension: fullVisitorId {
       label: "Full Visitor ID"
+      hidden: yes
     }
-
-    #dimension: visitStartSeconds {
-     # label: "Visit Start Seconds"
-      #type: date
-      #sql: TIMESTAMP_SECONDS(${TABLE}.visitStarttime) ;;
-      #hidden: yes
-    #}
 
     ## referencing partition_date for demo purposes only. Switch this dimension to reference visistStartSeconds
     dimension_group: visitStart {
       timeframes: [date,day_of_week,fiscal_quarter,week,month,year,month_name,month_num,week_of_year]
-      label: "Visit Start"
+      label: "Session Start Date"
       type: time
       sql: (TIMESTAMP(${partition_date})) ;;
     }
@@ -70,6 +74,7 @@ view: ga_sessions {
 
     dimension: socialEngagementType {
       label: "Social Engagement Type"
+      hidden: yes
     }
 
     dimension: userid {
@@ -77,33 +82,36 @@ view: ga_sessions {
     }
 
     dimension: channelGrouping {
+      view_label: "Marketing Attribution"
       label: "Marketing Channel Summary"
     }
+
+  dimension: traffic_source{
+    view_label: "Marketing Attribution"
+    label: "Traffic Source"
+    type: string
+    sql:  lower(concat(${trafficSource.source}, " / ", ${channelGrouping}));;
+  }
 
 ##
 ### Custom Session-Level Dimensions
 ##
-dimension: hostname_unlimited {
-  type: string
-  sql: case when ${hits_page.hostName} IN ( 'unlimited.craftsy.com', 'membership.craftsy.com', 'landing.craftsy.com' ) then 'yes'
-          else 'no'
-        end;;
+
+dimension: tha_real_user_id {
+  label: "User ID"
+  type: number
+  sql: (
+    select
+      cast(safe_cast(d.value as float64) as int64) as user_id
+    from UNNEST(${TABLE}.customDimensions) as d
+    where d.index = 2
+      and d.value is not null
+  ) ;;
+  value_format: "0"
 }
 
-
-  dimension: tha_real_user_id {
-    label: "User ID"
-    type: string
-    sql: (
-              select d.value
-              from UNNEST(${TABLE}.customDimensions) as d
-              where d.index = 2
-                and d.value is not null
-                and REGEXP_CONTAINS(d.value, r'[a-zA-Z]') = false
-            );;
-  }
-
   dimension: channelType {
+    view_label: "Marketing Attribution"
     label: "Channel Type"
     type: string
     sql:  case
@@ -113,13 +121,8 @@ dimension: hostname_unlimited {
         end ;;
   }
 
-  dimension: traffic_source{
-    label: "Traffic Source"
-    type: string
-    sql:  lower(concat(${trafficSource.source}, " / ", ${channelGrouping}));;
-  }
-
   dimension: subscription_type {
+    view_label: "Unlimited Subscription"
     label: "Subscription Type"
     type: string
     sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and ${hits_eventInfo.eventAction} = 'trial started' then 'trial'
@@ -128,6 +131,7 @@ dimension: hostname_unlimited {
   }
 
   dimension: subscription_plan_type {
+    view_label: "Unlimited Subscription"
     label: "Subscription Plan Type"
     type: string
     sql: case when ${hits_eventInfo.eventCategory} = 'membership signup step' and REGEXP_CONTAINS(${hits_eventInfo.eventLabel}, r'(.*)year(.*)') then 'year'
@@ -138,6 +142,7 @@ dimension: hostname_unlimited {
   }
 
 dimension: live_sub_session  {
+  view_label: "Unlimited Subscription"
   type: string
   sql: case when (${hits_customdimensions.unlimited_active} = '1' or ${hits_customdimensions.unlimited_active} = 'true')
             and ${hits_eventInfo.eventAction} != 'no trial activation'
@@ -147,20 +152,30 @@ dimension: live_sub_session  {
 }
 
 measure: coupon_success_count {
+  view_label: "Coupon"
   type: count_distinct
   sql: case when ${hits_customdimensions.coupon_failure_message} is null then ${id}
           end;;
 }
 
 measure: coupon_failure_count {
+  view_label: "Coupon"
   type: count_distinct
   sql: case when ${hits_customdimensions.coupon_failure_message} is not null then ${id}
           end;;
 }
 
 measure: total_coupon_tries {
+  view_label: "Coupon"
   type: number
   sql: ${coupon_failure_count} + ${coupon_success_count};;
+}
+
+measure: coupon_success_rate {
+  view_label: "Coupon"
+  type: number
+  value_format: "0.00%"
+  sql: ${coupon_success_count} / ${total_coupon_tries} ;;
 }
 
 ##
@@ -186,7 +201,7 @@ measure: total_coupon_tries {
 
   measure: membership_goal_trail_start_conversion_rate {
     label: "Goal 1: Trial Start Conversion Rate"
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     type: number
     value_format_name: percent_1
     sql: ${membership_goal_trial_start} / ${membership_sessions};;
@@ -349,9 +364,40 @@ measure: total_coupon_tries {
         end;;
   }
 
-## Membership Goals
+##
+### Membership Logged-In Goals
+##
+  measure: membership_goal_viewed_video_player {
+    view_label: "Membership Logged-In Goals"
+    label: "Goal 3: Viewed Video Player"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'video player content' then ${id}
+       end;;
+  }
+
+  measure: membership_goal_used_site_search {
+    view_label: "Membership Logged-In Goals"
+    label: "Goal 5: Used Site Search"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'site search results'
+      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
+       end;;
+  }
+
+  measure: membership_goal_material_download {
+    view_label: "Membership Logged-In Goals"
+    label: "Goal 6: Material Download"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'material download' then ${id}
+       end;;
+  }
+
+## Membership Acquisition Goals
   measure: membership_goal_trial_start {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 1: Trial Start"
     type: count_distinct
     sql: case
@@ -362,7 +408,7 @@ measure: total_coupon_tries {
   }
 
   measure: membership_goal_register {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 2: Register"
     type: count_distinct
     sql: case
@@ -372,17 +418,8 @@ measure: total_coupon_tries {
        end;;
   }
 
-  measure: membership_goal_viewed_video_player {
-    view_label: "Membership Goals"
-    label: "Goal 3: Viewed Video Player"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'video player content' then ${id}
-       end;;
-  }
-
   measure: membership_goal_start_signup {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 4: Start Signup"
     type: count_distinct
     sql: case
@@ -390,27 +427,8 @@ measure: total_coupon_tries {
        end;;
   }
 
-  measure: membership_goal_used_site_search {
-    view_label: "Membership Goals"
-    label: "Goal 5: Used Site Search"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'site search results'
-      and REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
-       end;;
-  }
-
-  measure: membership_goal_material_download {
-    view_label: "Membership Goals"
-    label: "Goal 6: Material Download"
-    type: count_distinct
-    sql: case
-      when ${hits.eventInfo}.eventcategory = 'material download' then ${id}
-       end;;
-  }
-
   measure: membership_goal_select_payment_method {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 7: Select Payment Method"
     type: count_distinct
     sql: case
@@ -420,7 +438,7 @@ measure: total_coupon_tries {
   }
 
   measure: membership_goal_selected_plan {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 8: Selected Plan"
     type: count_distinct
     sql: case
@@ -430,7 +448,7 @@ measure: total_coupon_tries {
   }
 
   measure: membership_goal_trial_start_monthly {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 9: Trial Start Monthly"
     type: count_distinct
     sql: case
@@ -441,7 +459,7 @@ measure: total_coupon_tries {
   }
 
   measure: membership_goal_trial_start_annual {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 10: Trial Start Annual"
     type: count_distinct
     sql: case
@@ -452,7 +470,7 @@ measure: total_coupon_tries {
   }
 
   measure: membership_goal_no_trial_activation {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Goal 11: No Trial Activation"
     type: count_distinct
     sql: case
@@ -469,7 +487,7 @@ measure: total_coupon_tries {
     }
 
   measure: membership_sessions {
-    view_label: "Membership Goals"
+    view_label: "Membership Acquisition Goals"
     label: "Membership Sessions"
     type: count_distinct
     sql: case when REGEXP_CONTAINS(${hits_page.hostName}, r'.*(unlimited|landing|membership).*') then ${id}
@@ -481,12 +499,14 @@ measure: total_coupon_tries {
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.transactions_count, totals.transactionRevenue_total]
     }
     measure: unique_visitors {
+      label: "Unique Users"
       type: count_distinct
       sql: ${fullVisitorId} ;;
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.hits, totals.page_views, totals.timeonsite]
     }
 
-    measure: average_sessions_ver_visitor {
+    measure: average_sessions_per_visitor {
+      label: "Average Sessions Per User"
       type: number
       sql: 1.0 * (${session_count}/NULLIF(${unique_visitors},0))  ;;
       value_format_name: decimal_2
@@ -494,12 +514,13 @@ measure: total_coupon_tries {
     }
 
     measure: total_visitors {
+      label: "Total Users"
       type: count
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.hits, totals.page_views, totals.timeonsite]
     }
 
     measure: first_time_visitors {
-      label: "First Time Visitors"
+      label: "New Visitors"
       type: count
       filters: {
         field: visitnumber

@@ -4,13 +4,14 @@ view: session_totals_base {
     dimension: id {
       primary_key: yes
       hidden: yes
-      sql: ${TABLE}.id ;;
+      sql: ${ga_sessions.id} ;;
     }
 
   dimension: timeOnScreen_total_unique{
     label: "Time On Screen Total"
     type: number
     sql: ${TABLE}.timeOnScreen ;;
+    hidden: yes
   }
 
   dimension: timeonsite_tier {
@@ -19,6 +20,7 @@ view: session_totals_base {
     sql: ${TABLE}.timeonsite ;;
     tiers: [0,15,30,60,120,180,240,300,600]
     style: integer
+    hidden: yes
   }
 
     measure: visits_total {
@@ -34,11 +36,12 @@ view: session_totals_base {
 
     measure: hits_average_per_session {
       type: number
-      sql: 1.0 * ${hits_total} / NULLIF(${TABLE}.session_count,0) ;;
+      sql: 1.0 * ${hits_total} / NULLIF(${ga_sessions.session_count},0) ;;
       value_format_name: decimal_2
     }
 
     measure: pageviews_total {
+      view_label: "Page"
       label: "Page Views"
       type: sum
       sql: ${TABLE}.pageviews ;;
@@ -53,14 +56,14 @@ view: session_totals_base {
     measure: timeonsite_average_per_session {
       label: "Time On Site Average Per Session"
       type: number
-      sql: 1.0 * ${timeonsite_total} / NULLIF(${TABLE}.session_count,0) ;;
+      sql: 1.0 * ${timeonsite_total} / NULLIF(${ga_sessions.session_count},0) ;;
       value_format_name: decimal_2
     }
 
     measure: page_views_session {
       label: "Page Views Per Session"
       type: number
-      sql: 1.0 * ${pageviews_total} / NULLIF(${TABLE}.session_count,0) ;;
+      sql: 1.0 * ${pageviews_total} / NULLIF(${ga_sessions.session_count},0) ;;
       value_format_name: decimal_2
     }
 
@@ -71,7 +74,7 @@ view: session_totals_base {
 
     measure: bounce_rate {
       type:  number
-      sql: 1.0 * ${bounces_total} / NULLIF(${TABLE}.session_count,0) ;;
+      sql: 1.0 * ${bounces_total} / NULLIF(${ga_sessions.session_count},0) ;;
       value_format_name: percent_2
     }
 
