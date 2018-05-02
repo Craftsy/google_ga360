@@ -405,7 +405,6 @@ dimension: video_entrance_component {
   dimension: offer_code {
     label: "Offer Code"
     type: string
-    hidden: yes
     sql: (
               select s.value
               from ${hits.customDimensions} as s

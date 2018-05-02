@@ -151,6 +151,8 @@ dimension: live_sub_session  {
        end;;
 }
 
+
+
 measure: coupon_success_count {
   view_label: "Coupon"
   type: count_distinct
