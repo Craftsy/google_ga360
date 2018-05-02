@@ -5,9 +5,10 @@ include: "*.view.lkml"
 
 # include all the dashboards from the bigqury_ga_sessions project
 include: "*.dashboard.lkml"
+persist_for: "24 hours"
 
 explore: membership {
-  persist_for: "1 hour"
+  # persist_for: "1 hour"
   from: ga_sessions
 
   join: totals {
@@ -49,7 +50,7 @@ explore: membership {
 }
 
 explore: ga_sessions {
-  persist_for: "1 hour"
+  # persist_for: "1 hour"
   from: ga_sessions
   label: "Google Analytics Sessions"
   view_label: "Sessions"
