@@ -144,7 +144,7 @@ dimension: tha_real_user_id {
 dimension: live_sub_session  {
   view_label: "Unlimited Subscription"
   type: string
-  sql: case when (${hits_customdimensions.unlimited_active} = '1' or ${hits_customdimensions.unlimited_active} = 'true')
+  sql: case when (${unlimited_active} = '1' or ${unlimited_active} = 'true')
             and ${hits_eventInfo.eventAction} != 'no trial activation'
             and ${hits_eventInfo.eventAction} != 'trial started' then 'yes'
           else 'no'
@@ -496,10 +496,44 @@ measure: coupon_success_rate {
         end;;
   }
 
+  dimension: unlimited_active {
+    view_label: "Unlimited Subscription"
+    label: "Unlimited Active (Yes/ No)"
+    type: string
+    sql: (
+        select
+          case when s.value = '1' or s.value = 'true' then 'Yes'
+             else 'No'
+          end
+        from ${hits.customDimensions} as s
+        where s.index = 140
+    );;
+  }
+
+ dimension: unlimited_active_first_hit {
+  view_label: "Unlimited Subscription"
+  label: "Unlimited Active First Hit (Yes/ No)"
+  type: string
+  sql: (
+        select
+          case when s.value = '1' or s.value = 'true' then 'Yes'
+              else 'No'
+          end
+        from ${hits.customDimensions} as s
+        where s.index = 140 and ${hits.hitNumber} = 1
+    );;
+}
+
+  dimension: is_first_hit {
+    type: string
+    sql: case when ${hits.hitNumber} = 1 then 'Yes' else 'No' end;;
+  }
+
     measure: session_count {
       type: count
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.transactions_count, totals.transactionRevenue_total]
     }
+
     measure: unique_visitors {
       label: "Unique Users"
       type: count_distinct

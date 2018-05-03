@@ -9,7 +9,7 @@ view: hits_base {
 
   dimension: hitNumber {
     label: "Hit Number"
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: time {

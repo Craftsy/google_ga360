@@ -42,6 +42,17 @@ view: hits_page_base {
         end;;
   }
 
+  dimension: page_type{
+    label: "Page Type"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 32
+    );;
+  }
+
+
   dimension: pageTitle {
     label: "Page Title"
   }
