@@ -537,7 +537,7 @@ measure: coupon_success_rate {
     measure: unique_visitors {
       label: "Unique Users"
       type: count_distinct
-      sql: ${fullVisitorId} ;;
+      sql: ${userid} ;;
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.hits, totals.page_views, totals.timeonsite]
     }
 
@@ -551,7 +551,7 @@ measure: coupon_success_rate {
 
     measure: total_visitors {
       label: "Total Users"
-      type: count
+      type: count_distinct
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.hits, totals.page_views, totals.timeonsite]
     }
 
