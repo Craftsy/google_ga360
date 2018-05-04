@@ -22,6 +22,8 @@ view: ga_sessions {
       hidden: yes
     }
 
+
+
     dimension: visitnumber {
       label: "Session Number"
       type: number

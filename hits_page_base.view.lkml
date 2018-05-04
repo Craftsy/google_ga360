@@ -42,17 +42,6 @@ view: hits_page_base {
         end;;
   }
 
-  dimension: page_type{
-    label: "Page Type"
-    type: string
-    sql: (
-        select s.value
-        from ${hits.customDimensions} as s
-        where s.index = 32
-    );;
-  }
-
-
   dimension: pageTitle {
     label: "Page Title"
   }
@@ -64,4 +53,11 @@ view: hits_page_base {
   dimension: searchCategory{
     label: "Search Category"
   }
+
+  measure: pageviews_by_page {
+    label: "Pageviews"
+    type: sum
+    sql: case when ${hits.type} = 'PAGE' then 1 else 0  END;;
+  }
+
 }

@@ -52,10 +52,19 @@ view: hits_base {
   measure: count {
     label: "Hits Count"
     type: count
-    drill_fields: [hits.detail*]
+   drill_fields: [hits.detail*]
   }
 
+  measure: hits_distinct_count {
+    label: "Hits Distinct Count"
+    type: count_distinct
+    sql:${id} ;;
+  }
+
+
+
   # subrecords
+  dimension: type {hidden: no}
   dimension: page {hidden:yes}
   dimension: transaction {hidden:yes}
   dimension: item {hidden:yes}
@@ -73,7 +82,7 @@ view: hits_base {
   dimension: exceptionInfo {hidden: yes}
   dimension: experiment {hidden: yes}
 
-  set: detail {
-    fields: [ga_sessions.id, ga_sessions.visitnumber, ga_sessions.session_count, hits_page.pagePath, hits.pageTitle]
-  }
+#  set: detail {
+ #   fields: [ga_sessions.id, ga_sessions.visitnumber, ga_sessions.session_count, hits_page.pagePath, hits.pageTitle]
+#  }
 }

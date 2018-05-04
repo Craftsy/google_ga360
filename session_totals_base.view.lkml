@@ -43,8 +43,9 @@ view: session_totals_base {
     measure: pageviews_total {
       view_label: "Page"
       label: "Page Views"
-      type: sum
-      sql: ${TABLE}.pageviews ;;
+      type: sum_distinct
+      hidden: yes
+      sql: ${TABLE}.pageviews;;
     }
 
     measure: timeonsite_total {
@@ -90,6 +91,16 @@ view: session_totals_base {
       value_format_name: usd_0
       drill_fields: [transactions_count, transactionRevenue_total]
     }
+
+  dimension: page_type{
+    label: "Page Type"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 32
+    );;
+  }
 
     measure: newVisits_total {
       label: "New Visits Total"
