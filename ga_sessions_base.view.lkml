@@ -97,7 +97,7 @@ view: ga_sessions {
 ### Custom Session-Level Dimensions
 ##
 
-dimension: tha_real_user_id {
+dimension: the_real_user_id {
   label: "User ID"
   type: number
   sql: (
@@ -537,7 +537,7 @@ measure: coupon_success_rate {
     measure: unique_visitors {
       label: "Unique Users"
       type: count_distinct
-      sql: ${userid} ;;
+      sql: ${the_real_user_id} ;;
       drill_fields: [fullVisitorId, visitnumber, session_count, totals.hits, totals.page_views, totals.timeonsite]
     }
 
