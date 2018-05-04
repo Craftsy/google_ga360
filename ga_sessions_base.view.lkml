@@ -153,6 +153,24 @@ dimension: live_sub_session  {
        end;;
 }
 
+  dimension: digital_segment {
+    view_label: "Sessions"
+    label: "Digital Segment"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 90 and s.value is not null
+    );;
+  }
+
+  dimension: digital_segment_type {
+    label: "Digital Segment Type"
+    type: string
+    sql:case when REGEXP_CONTAINS(${digital_segment}, r'.*NEVER.*') then "NEVER"
+        when REGEXP_CONTAINS(${digital_segment}, r'.*LAPSED.*') then "LAPSED"
+        else ${digital_segment} end;;
+  }
 
 
 measure: coupon_success_count {
