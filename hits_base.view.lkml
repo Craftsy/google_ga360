@@ -24,7 +24,8 @@ view: hits_base {
   }
 
   dimension: hour {
-   hidden: yes
+  type: number
+   hidden: no
   }
 
   dimension: minute {
