@@ -168,6 +168,17 @@ view: hits_customdimensions_base {
     );;
   }
 
+  dimension: digital_segment {
+    view_label: "Sessions"
+    label: "Digital Segment"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 90
+    );;
+  }
+
   dimension: site_search_term {
     view_label: "Site Search"
     label: "Site Search Term"
