@@ -401,6 +401,17 @@ dimension: video_entrance_component {
       );;
   }
 
+  dimension: unlimited_status {
+    view_label: "Unlimited Subscription"
+    label: "Unlimited Status"
+    type: string
+    sql: (
+              select s.value
+              from ${hits.customDimensions} as s
+              where s.index = 136
+      );;
+  }
+
   dimension: onsite_link_uq {
     view_label: "Sessions"
     label: "Onsite Link UQ"
