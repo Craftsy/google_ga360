@@ -92,16 +92,6 @@ view: session_totals_base {
       drill_fields: [transactions_count, transactionRevenue_total]
     }
 
-  dimension: page_type{
-    label: "Page Type"
-    type: string
-    sql: (
-        select s.value
-        from ${hits.customDimensions} as s
-        where s.index = 32
-    );;
-  }
-
     measure: newVisits_total {
       label: "New Visits Total"
       type: sum

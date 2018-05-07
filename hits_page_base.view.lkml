@@ -54,10 +54,26 @@ view: hits_page_base {
     label: "Search Category"
   }
 
+  dimension: page_type{
+    label: "Page Type"
+    type: string
+    sql: (
+        select s.value
+        from ${hits.customDimensions} as s
+        where s.index = 32
+    );;
+  }
+
   measure: pageviews_by_page {
     label: "Pageviews"
     type: sum
     sql: case when ${hits.type} = 'PAGE' then 1 else 0  END;;
   }
+
+measure: course_ldp_pageviews {
+  label: "Course LDP Pageviews"
+  type: sum
+  sql: case when ${hits.type} = 'PAGE' and ${page_type} = 'classListingDetail' then 1 else 0  END;;
+}
 
 }

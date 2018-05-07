@@ -200,6 +200,17 @@ measure: coupon_success_rate {
   sql: ${coupon_success_count} / ${total_coupon_tries} ;;
 }
 
+  measure: course_LDP_view {
+    view_label: "Sessions"
+    label: "Course LDP View"
+    type: count_distinct
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'listing detail page'
+      and ${hits.eventInfo}.eventaction = 'course'
+      and ${hits.eventInfo}.eventlabel = 'free: no + seller: craftsy' then ${id} end
+       ;;
+  }
+
 ##
 ### Custom Session-Level Measures
 ##
@@ -237,6 +248,7 @@ measure: coupon_success_rate {
     sql: case when ${hits_page.hostName} in ('unlimited.craftsy.com', 'landing.craftsy.com') then ${id}
         end ;;
   }
+
 
 ## Goals
   measure: goal_paid_purchase {

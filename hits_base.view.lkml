@@ -62,6 +62,24 @@ view: hits_base {
     sql:${id} ;;
   }
 
+  measure: add_to_cart {
+    view_label: "Events Info"
+    label: "Course Add to Cart"
+    type: sum
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'listing cart add' and ${hits.eventInfo}.eventaction = 'course' then 1 else 0 end
+       ;;
+  }
+
+  measure: ldp_watch_in_unlimited {
+    view_label: "Events Info"
+    label: "Watch in Unlimited"
+    type: sum
+    sql: case
+      when ${hits.eventInfo}.eventcategory = 'course format toggle' and ${hits.eventInfo}.eventaction = '--> watch in craftsy unlimited' then 1
+      when ${hits.eventInfo}.eventcategory = 'onsite link' and ${hits.eventInfo}.eventaction = 'acquisition: flagship --> unlimited' then 1 else 0 end
+       ;;
+  }
 
 
   # subrecords
