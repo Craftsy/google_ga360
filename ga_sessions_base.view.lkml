@@ -15,12 +15,25 @@ view: ga_sessions {
       label: "Session ID"
       primary_key: yes
       sql: CONCAT(CAST(${fullVisitorId} AS STRING), '|', COALESCE(CAST(${visitId} AS STRING),'')) ;;
+      description: "Session ID is a unique identifier that concatinates a user id by device (different from our internaly defined user id) with a unique id for each visit."
     }
 
     dimension: visitorId {
       label: "Visitor ID"
       hidden: yes
     }
+
+
+  dimension: visitId {
+    label: "Visit ID"
+    hidden: yes
+    description: ""
+  }
+
+  dimension: fullVisitorId {
+    label: "Full Visitor ID"
+    hidden: yes
+  }
 
 
 
@@ -34,6 +47,7 @@ view: ga_sessions {
       label: "New User"
       type: yesno
       sql: ${visitnumber} = 1 ;;
+      description: "New Users are those navigating to the site for the first time on a specific device. Yes, if session number = 1. "
     }
 
     dimension: visitnumbertier {
@@ -42,6 +56,7 @@ view: ga_sessions {
       tiers: [1,2,5,10,15,20,50,100]
       style: integer
       sql: ${visitnumber} ;;
+      description: "Tiers are based on the number of site visits a user has had on a specific device."
     }
 
     dimension: visitStartSeconds {
@@ -51,15 +66,6 @@ view: ga_sessions {
       hidden: yes
     }
 
-    dimension: visitId {
-      label: "Visit ID"
-      hidden: yes
-    }
-
-    dimension: fullVisitorId {
-      label: "Full Visitor ID"
-      hidden: yes
-    }
 
     ## referencing partition_date for demo purposes only. Switch this dimension to reference visistStartSeconds
     dimension_group: visitStart {
@@ -67,6 +73,7 @@ view: ga_sessions {
       label: "Session Start Date"
       type: time
       sql: (TIMESTAMP(${partition_date})) ;;
+      description: "Date of a user's session. Currently, based on the partition date, or the date of the daily data ingestion/arrival."
     }
 
     ## use visit or hit start time instead
@@ -86,6 +93,7 @@ view: ga_sessions {
     dimension: channelGrouping {
       view_label: "Marketing Attribution"
       label: "Marketing Channel Summary"
+      description: "Session and hit data summaries based on the attributed marketing channel."
     }
 
   dimension: traffic_source{
@@ -93,6 +101,7 @@ view: ga_sessions {
     label: "Traffic Source"
     type: string
     sql:  lower(concat(${trafficSource.source}, " / ", ${channelGrouping}));;
+    description: "Specific origin of all referrals to our site. Possible sources include google, facebook.com, or pinterest. The source is then concatinated by the overarching marketing channel."
   }
 
 ##
@@ -110,6 +119,7 @@ dimension: the_real_user_id {
       and d.value is not null
   ) ;;
   value_format: "0"
+  description: "User Id as defined in the data warehouse. Imported into GA as a custom dimension."
 }
 
   dimension: channelType {
@@ -121,6 +131,7 @@ dimension: the_real_user_id {
       when ${channelGrouping} IN ( 'affiliates' , 'big partners' , 'instructor' , 'external email' ) then 'biz dev'
         else 'unpaid'
         end ;;
+    description: "Groupings of marketing channels into paid, biz dev & unpaid."
   }
 
   dimension: subscription_type {
